@@ -7,11 +7,11 @@ const Navbar = () => {
     <nav className="bg-white border-b shadow-sm py-4 px-6">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Left Icons */}
-        <div className="flex items-center space-x-4 text-gray-700 text-lg">
+        {/* <div className="flex items-center space-x-4 text-gray-700 text-lg">
           <button aria-label="Search" className="navbar-button">
             <FaSearch />
           </button>
-        </div>
+        </div> */}
 
         {/* Center Logo */}
         <NavLink to="/" className="text-2xl font-bold flex items-center space-x-2 navbar-logo">
