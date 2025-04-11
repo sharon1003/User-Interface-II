@@ -17,31 +17,31 @@ const Footer = () => {
         <div className="footer-col">
           <h4>MORE INFO</h4>
           <ul>
-            <li><a href="#">Search</a></li>
+            {/* <li><a href="#">Search</a></li> */}
             <li><a href="#">Terms of Service</a></li>
-            <li><a href="#">Refund Policy</a></li>
+            {/* <li><a href="#">Refund Policy</a></li> */}
           </ul>
         </div>
 
         <div className="footer-col">
           <h4>CONTACT US</h4>
-          <p>info@cutiepopnailshop.com</p>
+          <p>info@nailshop.com</p>
           <div className="social-icons">
             <a href="#"><i className="fab fa-facebook"></i></a>
             <a href="#"><i className="fab fa-instagram"></i></a>
-            <a href="#"><i className="fab fa-tiktok"></i></a>
-            <a href="#"><i className="fab fa-pinterest"></i></a>
+            {/* <a href="#"><i className="fab fa-tiktok"></i></a> */}
+            {/* <a href="#"><i className="fab fa-pinterest"></i></a> */}
           </div>
         </div>
       </div>
 
       <div className="footer-bottom">
         <p>
-          &copy; 2025, Cutie Pop Nail Shop Powered by React · 
-          <a href="#"> Refund policy</a> · 
-          <a href="#"> Privacy policy</a> · 
-          <a href="#"> Terms of service</a> · 
-          <a href="#"> Shipping policy</a>
+          &copy; 2025, Nail Shop
+          {/* <a href="#"> Refund policy</a> ·  */}
+          {/* <a href="#"> Privacy policy</a> ·  */}
+          <a href="#"> Terms of service</a>
+          {/* <a href="#"> Shipping policy</a> */}
         </p>
       </div>
     </footer>
