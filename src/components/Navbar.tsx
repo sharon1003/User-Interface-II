@@ -48,7 +48,7 @@ const Navbar = () => {
           SHOP
         </NavLink>
         <NavLink
-          to="/custom"
+          to="/custom-your-nail"
           className={({ isActive }) =>
             `navbar-link ${isActive ? "underline underline-offset-4 text-green-700" : ""}`
           }

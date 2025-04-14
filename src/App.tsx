@@ -7,6 +7,8 @@ import NailArtPage from "./pages/NailArtPage";
 import GelManicure from "./pages/GelManicure"
 import NatureCare from "./pages/NaturalCare";
 import ShopPage from "./pages/Shop"
+import CustomYourOwnPage from "./pages/CustomYourPage";
+import CustomizePage from "./pages/CustomizePage";
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
         <Route path="/shop/nail-art" element={<NailArtPage />} /> {/* 新增這條路由 */}
         <Route path="/shop/gel-manicure" element={<GelManicure />}></Route>
         <Route path="/shop/natural-care" element={<NatureCare />}></Route>
-
+        <Route path="/custom-your-nail" element={<CustomizePage />}></Route>
       </Routes>
     </Router>
   );
