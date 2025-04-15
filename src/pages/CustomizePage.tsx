@@ -12,7 +12,6 @@ const CustomizePage = () => {
   const [length, setLength] = useState<'short' | 'medium' | 'long'>('short');
   const [color, setColor] = useState<string>('#F87171');
   const [stickers, setStickers] = useState<StickerType[]>([]);
-//   const [selectedSticker, setSelectedSticker] = useState<string>('');
 
 
 
@@ -77,19 +76,18 @@ const CustomizePage = () => {
         <>
             <h2 className="text-xl font-semibold mb-2">Step 4: Choose a Sticker</h2>
             <p className="text-sm text-gray-500 mb-4 text-center">
-                👉 Drag a sticker onto the nail canvas. You can <strong>drag</strong> to move,
-                <strong>scroll</strong> to resize, and <strong>click twice</strong> to delete.
+                👉 Drag a sticker onto the nail canvas. You can <strong>drag</strong> to move, and <strong>click twice</strong> to delete.
             </p>
             <SelectPicture />
              {/* Reset Button */}
-             <div className="mt-4 text-center">
+             {/* <div className="mt-4 text-center">
                 <button
                     onClick={() => setStickers([])}
                     className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
                 >
                     Reset Stickers
                 </button>
-            </div>
+            </div> */}
             <div className="mt-6 flex justify-between">    
             <button onClick={handleBack} className="px-4 py-2 border rounded">Back</button>
             <button

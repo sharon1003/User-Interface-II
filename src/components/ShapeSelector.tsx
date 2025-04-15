@@ -1,8 +1,3 @@
-import almondImg from '../assets/almond.png';
-import ovalImg from '../assets/round.png';
-import squovalImg from '../assets/squoval.png';
-import coffinImg from '../assets/coffin.png';
-
 type ShapeOption = "almond" | "oval" | "squoval" | "coffin";
 
 interface Props {
@@ -11,10 +6,10 @@ interface Props {
 }
 
 const shapeOptions: { label: string; value: ShapeOption; image: string }[] = [
-  { label: "Almond", value: "almond", image: almondImg },
-  { label: "Round/Oval", value: "oval", image: ovalImg },
-  { label: "Squoval", value: "squoval", image: squovalImg },
-  { label: "Coffin", value: "coffin", image: coffinImg },
+  { label: "Almond", value: "almond", image: '/assets/almond.png' },
+  { label: "Round/Oval", value: "oval", image: '/assets/round.png'},
+  { label: "Squoval", value: "squoval", image: '/assets/squoval.png' },
+  { label: "Coffin", value: "coffin", image: '/assets/coffin.png' },
 ];
 
 export const ShapeSelector = ({ selected, onSelect }: Props) => {

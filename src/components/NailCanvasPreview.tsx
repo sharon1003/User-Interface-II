@@ -21,6 +21,8 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const soundRef = useRef<HTMLAudioElement | null>(null);
+
 
   const getMousePos = (e: React.MouseEvent | React.DragEvent) => {
     const canvas = canvasRef.current!;
@@ -39,6 +41,12 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
     const emoji = e.dataTransfer.getData('sticker');
     const { x, y } = getMousePos(e);
     if (!emoji) return;
+    
+    if (soundRef.current) {
+      soundRef.current.currentTime = 0; // 回到音效開頭
+      soundRef.current.play().catch((err) => console.warn("Audio play failed:", err));
+    }
+
     setStickers((prev) => [...prev, { emoji, x, y, scale: 1, rotation: 0 }]);
   };
 
@@ -203,7 +211,9 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
         ref={canvasRef}
         className="border rounded w-3/4 h-auto bg-white"
       />
+      <audio ref={soundRef} src="/sounds/drum.wav" preload="auto" />
     </div>
+    
   );
 };
 
