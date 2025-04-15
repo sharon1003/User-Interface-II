@@ -4,8 +4,7 @@ interface Props {
   shape: 'almond' | 'oval' | 'squoval' | 'coffin';
   length: 'short' | 'medium' | 'long';
   color: string;
-  stickers: Sticker[];               
-  setStickers: React.Dispatch<React.SetStateAction<Sticker[]>>;
+  step: number;
 }
 
 interface Sticker {
@@ -16,24 +15,40 @@ interface Sticker {
   rotation: number;
 }
 
-const NailCanvasPreview = ({ shape, length, color }: Props) => {
+const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [stickers, setStickers] = useState<Sticker[]>([]);
-  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const soundRef = useRef<HTMLAudioElement | null>(null);
+  const deleteSoundRef = useRef<HTMLAudioElement | null>(null);
+  const redoSoundRef = useRef<HTMLAudioElement | null>(null);
+  const undoSoundRef = useRef<HTMLAudioElement | null>(null);
 
+  const [stickers, setStickers] = useState<Sticker[]>([]);
+  const [undoStack, setUndoStack] = useState<Sticker[][]>([]);
+  const [redoStack, setRedoStack] = useState<Sticker[][]>([]);
+  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+
+  const playSound = (ref: React.RefObject<HTMLAudioElement>) => {
+    if (ref.current) {
+      ref.current.currentTime = 0;
+      ref.current.play().catch((err) => console.warn('Audio play failed:', err));
+    }
+  };
 
   const getMousePos = (e: React.MouseEvent | React.DragEvent) => {
     const canvas = canvasRef.current!;
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
-
     return {
       x: (e.clientX - rect.left) * scaleX,
       y: (e.clientY - rect.top) * scaleY,
     };
+  };
+
+  const updateStickers = (newStickers: Sticker[]) => {
+    setUndoStack((prev) => [...prev, stickers]);
+    setRedoStack([]);
+    setStickers(newStickers);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -41,14 +56,9 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
     const emoji = e.dataTransfer.getData('sticker');
     const { x, y } = getMousePos(e);
     if (!emoji) return;
-    
-    //sound effect
-    if (soundRef.current) {
-      soundRef.current.currentTime = 0; 
-      soundRef.current.play().catch((err) => console.warn("Audio play failed:", err));
-    }
 
-    setStickers((prev) => [...prev, { emoji, x, y, scale: 1, rotation: 0 }]);
+    playSound(soundRef);
+    updateStickers([...stickers, { emoji, x, y, scale: 1, rotation: 0 }]);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -74,6 +84,9 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
   };
 
   const handleMouseUp = () => {
+    if (draggingIndex !== null) {
+      setUndoStack((prev) => [...prev, stickers]);
+    }
     setDraggingIndex(null);
   };
 
@@ -83,11 +96,31 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
       const sticker = stickers[i];
       const dist = Math.hypot(sticker.x - x, sticker.y - y);
       if (dist < 20) {
-        setStickers((prev) => prev.filter((_, index) => index !== i));
+        playSound(deleteSoundRef);
+        updateStickers(stickers.filter((_, index) => index !== i));
         return;
       }
     }
   };
+
+  const undo = () => {
+    if (undoStack.length === 0) return;
+    const last = undoStack[undoStack.length - 1];
+    setUndoStack((prev) => prev.slice(0, -1));
+    setRedoStack((prev) => [...prev, stickers]);
+    setStickers(last);
+    playSound(undoSoundRef);
+  };
+
+  const redo = () => {
+    if (redoStack.length === 0) return;
+    const next = redoStack[redoStack.length - 1];
+    setRedoStack((prev) => prev.slice(0, -1));
+    setUndoStack((prev) => [...prev, stickers]);
+    setStickers(next);
+    playSound(redoSoundRef);
+  };
+
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -191,15 +224,30 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onDoubleClick={handleDoubleClick}
-      className="w-full flex justify-center items-center"
+      className="w-full flex flex-col justify-center items-center"
     >
-      <canvas
-        ref={canvasRef}
-        className="border rounded w-3/4 h-auto bg-white"
-      />
+      <canvas ref={canvasRef} className="border rounded w-3/4 h-auto bg-white" />
+      {step === 4 && (
+        <div className="flex gap-2 mt-4">
+          <button
+            onClick={undo}
+            className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
+          >
+            Undo
+          </button>
+          <button
+            onClick={redo}
+            className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
+          >
+            Redo
+          </button>
+        </div>
+      )}
       <audio ref={soundRef} src="/sounds/drum.wav" preload="auto" />
+      <audio ref={deleteSoundRef} src="/sounds/delete.wav" preload="auto" />
+      <audio ref={undoSoundRef} src="/sounds/undo.wav" preload="auto" />
+      <audio ref={redoSoundRef} src="/sounds/redo.wav" preload="auto" />
     </div>
-    
   );
 };
 

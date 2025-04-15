@@ -5,15 +5,14 @@ import { LengthSelector } from '../components/LengthSelector';
 import ColorPatternSelector from '../components/ColorPattern';
 import NailCanvasPreview from '../components/NailCanvasPreview';
 import SelectPicture from '../components/SelectPicture';
+import CustomizeButton from '../components/CustomizeButton';
+
 
 const CustomizePage = () => {
   const [step, setStep] = useState(1);
   const [shape, setShape] = useState<'almond' | 'oval' | 'squoval' | 'coffin'>('almond');
   const [length, setLength] = useState<'short' | 'medium' | 'long'>('short');
   const [color, setColor] = useState<string>('#F87171');
-  const [stickers, setStickers] = useState<StickerType[]>([]);
-
-
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
@@ -28,13 +27,9 @@ const CustomizePage = () => {
             <h2 className="text-xl font-semibold mb-2">Step 1: Choose Shape</h2>
             <ShapeSelector selected={shape} onSelect={setShape} />
             <div className="mt-6 flex justify-center">
-                <button
-                onClick={handleNext}
-                disabled={!shape}
-                className="mt-6 px-4 py-2 bg-black text-white rounded disabled:opacity-50"
-                >
+                <CustomizeButton onClick={handleNext} soundSrc="/sounds/next.wav" className="bg-black text-white">
                 Next
-                </button>
+                </CustomizeButton>
             </div>
           </>
         )}
@@ -44,14 +39,12 @@ const CustomizePage = () => {
             <h2 className="text-xl font-semibold mb-2">Step 2: Choose Length</h2>
             <LengthSelector selected={length} onSelect={setLength} />
             <div className="mt-6 flex justify-between">
-              <button onClick={handleBack} className="px-4 py-2 border rounded">Back</button>
-              <button
-                onClick={handleNext}
-                disabled={!length}
-                className="px-4 py-2 bg-black text-white rounded disabled:opacity-50"
-              >
+                <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
+                Back
+                </CustomizeButton>
+                <CustomizeButton onClick={handleNext} soundSrc="/sounds/next.wav" className="bg-black text-white">
                 Next
-              </button>
+                </CustomizeButton>
             </div>
           </>
         )}
@@ -61,13 +54,12 @@ const CustomizePage = () => {
             <h2 className="text-xl font-semibold mb-2">Step 3: Choose Color</h2>
             <ColorPatternSelector selectedColor={color} onColorSelect={setColor} />
             <div className="mt-6 flex justify-between">
-              <button onClick={handleBack} className="px-4 py-2 border rounded">Back</button>
-              <button
-                onClick={handleNext}
-                className="px-4 py-2 bg-black text-white rounded"
-              >
-                Next
-              </button>
+                <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
+                    Back
+                </CustomizeButton>
+                <CustomizeButton onClick={handleNext} soundSrc="/sounds/next.wav" className="bg-black text-white">
+                    Next
+                </CustomizeButton>
             </div>
           </>
         )}
@@ -89,13 +81,12 @@ const CustomizePage = () => {
                 </button>
             </div> */}
             <div className="mt-6 flex justify-between">    
-            <button onClick={handleBack} className="px-4 py-2 border rounded">Back</button>
-            <button
-                onClick={handleNext}
-                className="px-4 py-2 bg-black text-white rounded"
-              >
-                Next
-              </button>
+            <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
+                    Back
+                </CustomizeButton>
+                <CustomizeButton onClick={handleNext} soundSrc="/sounds/next.wav" className="bg-black text-white">
+                    Next
+                </CustomizeButton>
             </div>
         </>
         )}
@@ -122,8 +113,10 @@ const CustomizePage = () => {
             </button>
             </div>
             <div className="mt-6 flex justify-between">
-              <button onClick={handleBack} className="px-4 py-2 border rounded">Back</button>
-              <button
+                <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
+                    Back
+                </CustomizeButton>
+                <button
                 onClick={() => alert('Customization submitted!')}
                 className="px-4 py-2 bg-green-600 text-white rounded"
               >
@@ -137,7 +130,7 @@ const CustomizePage = () => {
       {/* Preview */}
       <div className="mt-10 bg-gray-50 border rounded p-4">
         <h2 className="text-xl font-semibold mb-4">Live Preview</h2>
-        <NailCanvasPreview shape={shape} length={length || 'short'} color={color} stickers={stickers} setStickers={setStickers}/>
+        <NailCanvasPreview shape={shape} length={length || 'short'} color={color} step={step} />
         <p className="text-sm text-gray-500 mt-2 text-center">Your customized nail preview</p>
       </div>
     </div>
