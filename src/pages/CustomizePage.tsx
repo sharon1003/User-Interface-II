@@ -134,7 +134,7 @@ const CustomizePage = () => {
         )}
       </div>
 
-      {/* 下方：即時預覽區域 */}
+      {/* Preview */}
       <div className="mt-10 bg-gray-50 border rounded p-4">
         <h2 className="text-xl font-semibold mb-4">Live Preview</h2>
         <NailCanvasPreview shape={shape} length={length || 'short'} color={color} stickers={stickers} setStickers={setStickers}/>

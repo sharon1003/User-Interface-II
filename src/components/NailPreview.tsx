@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-// 匯入所有圖片
-import almond from '../assets/almond.png';
+// import image
+import almond from '/assets/almond.png';
 import round from '../assets/round.png';
 import squoval from '../assets/squoval.png';
 import coffin from '../assets/coffin.png';
@@ -61,9 +61,9 @@ const NailPreview = ({ shape, length, color }: Props) => {
 
       // 疊加顏色
       ctx.fillStyle = color;
-      ctx.globalAlpha = 0.3; // 半透明
+      ctx.globalAlpha = 0.3; 
       ctx.fillRect(0, fixedHeight - destHeight, fixedWidth, destHeight);
-      ctx.globalAlpha = 1.0; // 還原透明度
+      ctx.globalAlpha = 1.0;
     };
   }, [shape, length, color]);
 

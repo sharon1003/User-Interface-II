@@ -19,7 +19,7 @@ function App() {
         <Route path="/design" element={<Design />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/shop" element={<ShopPage />} />
-        <Route path="/shop/nail-art" element={<NailArtPage />} /> {/* 新增這條路由 */}
+        <Route path="/shop/nail-art" element={<NailArtPage />} />
         <Route path="/shop/gel-manicure" element={<GelManicure />}></Route>
         <Route path="/shop/natural-care" element={<NatureCare />}></Route>
         <Route path="/custom-your-nail" element={<CustomizePage />}></Route>

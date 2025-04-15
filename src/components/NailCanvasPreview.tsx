@@ -42,8 +42,9 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
     const { x, y } = getMousePos(e);
     if (!emoji) return;
     
+    //sound effect
     if (soundRef.current) {
-      soundRef.current.currentTime = 0; // 回到音效開頭
+      soundRef.current.currentTime = 0; 
       soundRef.current.play().catch((err) => console.warn("Audio play failed:", err));
     }
 
@@ -74,20 +75,6 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
 
   const handleMouseUp = () => {
     setDraggingIndex(null);
-  };
-
-  // 滾輪縮放貼紙
-  const handleWheel = (e: React.WheelEvent) => {
-    if (draggingIndex === null) return;
-    e.preventDefault();
-    setStickers((prev) => {
-      const updated = [...prev];
-      const sticker = updated[draggingIndex];
-      const delta = e.deltaY < 0 ? 0.05 : -0.05;
-      const newScale = Math.max(0.3, Math.min(2, sticker.scale + delta));
-      updated[draggingIndex] = { ...sticker, scale: newScale };
-      return updated;
-    });
   };
 
   const handleDoubleClick = (e: React.MouseEvent) => {
@@ -204,7 +191,6 @@ const NailCanvasPreview = ({ shape, length, color }: Props) => {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onDoubleClick={handleDoubleClick}
-      onWheel={handleWheel}
       className="w-full flex justify-center items-center"
     >
       <canvas
