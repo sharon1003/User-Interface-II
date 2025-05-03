@@ -1,3 +1,4 @@
+import {useTranslation} from "react-i18next";
 import { useState } from "react";
 import NailPreview from "../components/NailPreview";
 
@@ -12,6 +13,7 @@ const patternOptions = [
 ];
 
 const CustomizePage = () => {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
@@ -138,9 +140,13 @@ const CustomizePage = () => {
 
       {/* Live Preview */}
       <div className="mt-10 bg-gray-50 border rounded p-4">
-        <h2 className="text-xl font-semibold mb-4">Live Preview</h2>
+        <h2 className="text-xl font-semibold mb-4">
+          {t("customize.previewTitle")}
+        </h2>
         <NailPreview shape={shape} length={length} />
-        <p className="text-sm text-gray-500 mt-2 text-center">Your customized nail preview</p>
+        <p className="text-sm text-gray-500 mt-2 text-center">
+          {t("customize.previewDescription")}
+        </p>
       </div>
     </div>
   );
