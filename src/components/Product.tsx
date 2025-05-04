@@ -1,3 +1,5 @@
+import {useTranslation} from "react-i18next";
+
 export type ProductProps = {
     id: string;
     category: string;
@@ -14,6 +16,7 @@ const Product = ({ id, category, image, price, title, description, onAddToCart }
         nailart: "Nail Art",
         naturalcare: "Natural Care",
     };
+    const { t } = useTranslation();
 
     return (
         <div className="bg-[#fffefb] rounded-xl shadow-lg p-6 text-center">
@@ -32,7 +35,7 @@ const Product = ({ id, category, image, price, title, description, onAddToCart }
                 onClick={() => onAddToCart?.(id)}
                 className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
             >
-                Add to Cart
+                {t("product.addToCart")}
             </button>
         </div>
     );

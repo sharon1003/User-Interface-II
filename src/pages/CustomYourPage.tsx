@@ -102,14 +102,14 @@ const CustomizePage = () => {
           </div>
           <div className="flex justify-between">
             <button onClick={handleBack} className="px-4 py-2 border rounded">
-              Back
+              {t("customize.back")}
             </button>
             <button
               onClick={handleNext}
               disabled={!pattern}
               className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
-              Next
+              {t("customize.next")}
             </button>
           </div>
         </>
@@ -117,7 +117,8 @@ const CustomizePage = () => {
 
       {step === 4 && (
         <>
-          <h3 className="font-semibold mb-3">Step 4: Summary</h3>
+          <h3 className="font-semibold mb-3">{t("customize.step4Sum")}
+          </h3>
           <div className="mb-4 text-left">
             <p><strong>Size:</strong> {size}</p>
             <p><strong>Color:</strong> <span style={{ color }}>{color}</span></p>
@@ -125,14 +126,14 @@ const CustomizePage = () => {
           </div>
           <div className="flex justify-between">
             <button onClick={handleBack} className="px-4 py-2 border rounded">
-              Back
+              {t("customize.back")}
             </button>
             <button
               onClick={() => alert("Customization submitted!")}
               disabled={isConfirmDisabled}
               className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
-              Submit
+              {t("customize.submit")}
             </button>
           </div>
         </>

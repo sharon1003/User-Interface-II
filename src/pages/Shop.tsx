@@ -1,6 +1,7 @@
 // src/pages/ShopPage.tsx
 import {useTranslation} from "react-i18next";
 import {useSearchParams} from "react-router-dom";
+import { useCart } from "../components/CartContext.tsx";
 import Product from "../components/Product.tsx";
 import {allProducts} from "../data/product";
 
@@ -17,6 +18,9 @@ const ShopPage = () => {
             : allProducts.filter((product) => product.category === selectedCategory);
 
     const categoryKeys = ["all", "gelmanicure", "nailart", "naturalcare"];
+    //const [cartItems, setCartItems] = useState([]);
+
+    const { addToCart } = useCart();
 
     return (
         <div className="bg-[#f5f3ea] min-h-screen">
@@ -51,6 +55,16 @@ const ShopPage = () => {
                             price={p.price}
                             title={p.translations[lang]?.title ?? p.translations.en.title}
                             description={p.translations[lang]?.description ?? p.translations.en.description}
+                            onAddToCart={() =>
+                                addToCart({
+                                    id: p.id,
+                                    category: p.category,
+                                    image: p.image,
+                                    price: p.price,
+                                    title: p.translations[lang]?.title ?? p.translations.en.title,
+                                    description: p.translations[lang]?.description ?? p.translations.en.description,
+                                })
+                            }
                         />
                     ))}
                 </div>

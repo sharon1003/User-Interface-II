@@ -75,7 +75,24 @@ i18n
                         step3: "Step 3: Choose Color",
                         step4: "Step 4: Choose a Sticker",
                         previewTitle: "Live Preview",
-                        previewDescription: "Your customized nail preview"
+                        previewDescription: "Your customized nail preview",
+                        undo: "Undo",
+                        redo: "Redo",
+                        step4Sum: "Step 4: Summary",
+                        submit: "Submit",
+                        savePreview: "Save Preview",
+                        shape: "Shape",
+                        length: "Length",
+                        color: "Color",
+                    },
+                    product: {
+                        addToCart: "Add to Cart"
+                    },
+                    cart: {
+                        title: "Cart",
+                        empty: "Your cart is empty.",
+                        total: "Total",
+                        pay: "Pay Now"
                     },
                 },
             },
@@ -142,7 +159,24 @@ i18n
                         step3: "Bước 3: Chọn màu sắc",
                         step4: "Bước 4: Chọn sticker",
                         previewTitle: "Xem trước trực tiếp",
-                        previewDescription: "Bản xem trước móng tay bạn đã tùy chỉnh"
+                        previewDescription: "Bản xem trước móng tay bạn đã tùy chỉnh",
+                        undo: "Hoàn tác",
+                        redo: "Làm lại",
+                        step4Sum: "Bước 4: Tóm tắt",
+                        submit: "Gửi",
+                        savePreview: "Lưu bản xem trước",
+                        shape: "Hình dáng",
+                        length: "Độ dài",
+                        color: "Màu sắc",
+                    },
+                    product: {
+                        addToCart: "Thêm vào giỏ hàng"
+                    },
+                    cart: {
+                        title: "Giỏ hàng",
+                        empty: "Giỏ hàng của bạn đang trống.",
+                        total: "Tổng cộng",
+                        pay: "Thanh toán",
                     },
                 },
             },
@@ -209,7 +243,24 @@ i18n
                         step3: "Steg 3: Välj färg",
                         step4: "Steg 4: Välj en klistermärke",
                         previewTitle: "Förhandsvisning",
-                        previewDescription: "Din anpassade nagel visas här"
+                        previewDescription: "Din anpassade nagel visas här",
+                        undo: "Ångra",
+                        redo: "Gör om",
+                        step4Sum: "Steg 4: Sammanfattning",
+                        submit: "Skicka",
+                        savePreview: "Spara förhandsvisning",
+                        shape: "Form",
+                        length: "Längd",
+                        color: "Färg",
+                    },
+                    product: {
+                        addToCart: "Lägg till i kundvagnen"
+                    },
+                    cart: {
+                        title: "Kundvagn",
+                        empty: "Din kundvagn är tom.",
+                        total: "Totalt",
+                        pay: "Betala",
                     },
                 },
             },
@@ -276,7 +327,24 @@ i18n
                         step3: "步骤 3：选择颜色",
                         step4: "步骤 4：选择贴纸",
                         previewTitle: "实时预览",
-                        previewDescription: "您自定义的美甲预览"
+                        previewDescription: "您自定义的美甲预览",
+                        undo: "撤销",
+                        redo: "重做",
+                        step4Sum: "步骤4：摘要",
+                        submit: "提交",
+                        savePreview: "保存预览",
+                        shape: "形状",
+                        length: "长度",
+                        color: "颜色",
+                    },
+                    product: {
+                        addToCart: "加入购物车"
+                    },
+                    cart: {
+                        title: "购物车",
+                        empty: "您的购物车是空的。",
+                        total: "总计",
+                        pay: "立即支付",
                     },
                 },
             },

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from "react-i18next";
 
 interface Props {
   shape: 'almond' | 'oval' | 'squoval' | 'coffin';
@@ -16,6 +17,7 @@ interface Sticker {
 }
 
 const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
+  const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const soundRef = useRef<HTMLAudioElement | null>(null);
   const deleteSoundRef = useRef<HTMLAudioElement | null>(null);
@@ -233,13 +235,13 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
             onClick={undo}
             className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
           >
-            Undo
+            {t("customize.undo")}
           </button>
           <button
             onClick={redo}
             className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
           >
-            Redo
+            {t("customize.redo")}
           </button>
         </div>
       )}

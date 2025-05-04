@@ -111,10 +111,11 @@ const CustomizePage = () => {
 
                     {step === 5 && (
                         <>
-                            <h2 className="text-xl font-semibold mb-2">Step 4: Summary</h2>
-                            <p><strong>Shape:</strong> {shape}</p>
-                            <p><strong>Length:</strong> {length}</p>
-                            <p><strong>Color:</strong> <span style={{color}}>{color}</span></p>
+                            <h2 className="text-xl font-semibold mb-2">{t("customize.step4Sum")}
+                            </h2>
+                            <p><strong>{t("customize.shape")}:</strong> {shape}</p>
+                            <p><strong>{t("customize.length")}:</strong> {length}</p>
+                            <p><strong>{t("customize.color")}:</strong> <span style={{color}}>{color}</span></p>
                             <div className="mt-4 text-center">
                                 <button
                                     onClick={() => {
@@ -127,18 +128,18 @@ const CustomizePage = () => {
                                     }}
                                     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                                 >
-                                    Save Preview
+                                    {t("customize.savePreview")}
                                 </button>
                             </div>
                             <div className="mt-6 flex justify-between">
                                 <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
-                                    Back
+                                    {t("customize.back")}
                                 </CustomizeButton>
                                 <button
                                     onClick={() => alert('Customization submitted!')}
                                     className="px-4 py-2 bg-green-600 text-white rounded"
                                 >
-                                    Submit
+                                    {t("customize.submit")}
                                 </button>
                             </div>
                         </>
