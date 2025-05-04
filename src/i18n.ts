@@ -92,8 +92,15 @@ i18n
                         title: "Cart",
                         empty: "Your cart is empty.",
                         total: "Total",
-                        pay: "Pay Now"
+                        pay: "Go to Checkout"
                     },
+                    payment: {
+                        title: "Payment",
+                        method: "Choose Payment Method",
+                        total: "Total",
+                        payNow: "Pay Now",
+                        swishPhone: "Swish Phone Number",
+                    }
                 },
             },
             vi: {
@@ -176,8 +183,15 @@ i18n
                         title: "Giỏ hàng",
                         empty: "Giỏ hàng của bạn đang trống.",
                         total: "Tổng cộng",
-                        pay: "Thanh toán",
+                        pay: "Đi tới thanh toán",
                     },
+                    payment: {
+                        title: "Thanh toán",
+                        method: "Chọn phương thức thanh toán",
+                        total: "Tổng cộng",
+                        payNow: "Thanh toán",
+                        swishPhone: "Số điện thoại Swish",
+                    }
                 },
             },
             sv: {
@@ -260,8 +274,15 @@ i18n
                         title: "Kundvagn",
                         empty: "Din kundvagn är tom.",
                         total: "Totalt",
-                        pay: "Betala",
+                        pay: "Gå till kassa",
                     },
+                    payment: {
+                        title: "Betalning",
+                        method: "Välj betalningsmetod",
+                        total: "Totalt",
+                        payNow: "Betala nu",
+                        swishPhone: "Swish-telefonnummer",
+                    }
                 },
             },
             zh: {
@@ -344,8 +365,15 @@ i18n
                         title: "购物车",
                         empty: "您的购物车是空的。",
                         total: "总计",
-                        pay: "立即支付",
+                        pay: "前往结账",
                     },
+                    payment: {
+                        title: "付款",
+                        method: "选择支付方式",
+                        total: "总计",
+                        payNow: "立即支付",
+                        swishPhone: "Swish 手机号码",
+                    }
                 },
             },
         },
