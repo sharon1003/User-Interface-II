@@ -1,10 +1,12 @@
 // src/pages/Cart.tsx
 import { useTranslation } from "react-i18next";
 import {useCart} from "../components/CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
     const { t } = useTranslation();
     const {cartItems, clearCart, increaseQuantity, decreaseQuantity} = useCart();
+    const navigate = useNavigate();
 
     const total = cartItems.reduce((sum, item) => {
         const price = parseFloat(item.price.replace("$", ""));
@@ -56,7 +58,7 @@ const Cart = () => {
                         </p>
                         <button
                             className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
-                            onClick={clearCart}
+                            onClick={() => navigate("/payment")}
                         >
                             {t("cart.pay")}
                         </button>
