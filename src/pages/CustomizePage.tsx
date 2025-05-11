@@ -18,6 +18,22 @@ const CustomizePage = () => {
   const [length, setLength] = useState<"short" | "medium" | "long">("short");
   const [color, setColor] = useState<string>("#F87171");
 
+  const basePrice = 24.99;
+  const [price, setPrice] = useState<string>(basePrice.toFixed(2));
+  const [totalPrice, setTotalPrice] = useState<number>(0); // Add totalPrice state
+
+  const lengthPrice: Record<"short" | "medium" | "long", number> = {
+    short: 0,
+    medium: 2,
+    long: 3,
+  };
+
+  const handleLengthChange = (newLength: "short" | "medium" | "long") => {
+    setLength(newLength);
+    const newPrice = basePrice + lengthPrice[newLength];
+    setPrice(newPrice.toFixed(2));
+  };
+
   const handleNext = () => setStep((prev) => prev + 1);
   const handleBack = () => setStep((prev) => prev - 1);
 
@@ -82,7 +98,7 @@ const CustomizePage = () => {
               <h2 className="text-xl font-semibold mb-2">
                 {t("customize.step2")}
               </h2>
-              <LengthSelector selected={length} onSelect={setLength} />
+              <LengthSelector selected={length} onSelect={handleLengthChange} />
               <div className="mt-6 flex justify-between">
                 <CustomizeButton
                   onClick={handleBack}
@@ -184,6 +200,10 @@ const CustomizePage = () => {
                 <strong>{t("customize.color")}:</strong>{" "}
                 <span style={{ color }}>{color}</span>
               </p>
+              <p>
+                <strong>{t("customize.price")}:</strong> $
+                {(basePrice + totalPrice).toFixed(2)}
+              </p>
               <div className="mt-4 text-center">
                 <button
                   onClick={handleDownload}
@@ -221,6 +241,8 @@ const CustomizePage = () => {
             length={length || "short"}
             color={color}
             step={step}
+            totalPrice={totalPrice}
+            setTotalPrice={setTotalPrice}
           />
           <p className="text-sm text-gray-500 mt-2 text-center">
             {t("customize.previewDescription")}

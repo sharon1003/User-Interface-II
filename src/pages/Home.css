@@ -1,74 +1,73 @@
 .home-container {
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f5f3ea; /* 米色底 */
-    color: #4b3f2f;            /* 深咖啡色文字 */
-    min-height: 100vh;
-  }
-  
-  .hero {
-    text-align: center;
-    background-color: #dfe6d5; /* 淺橄欖綠 */
-    padding: 3rem 1rem;
-  }
-  
-  .hero h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #3e3325;
-  }
-  
-  .hero p {
-    max-width: 600px;
-    margin: 0 auto;
-    font-size: 1.125rem;
-    color: #5a4b3b;
-  }
-  
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f5f3ea; /* 米色底 */
+  color: #4b3f2f; /* 深咖啡色文字 */
+  min-height: 100vh;
+}
+
+.hero {
+  text-align: center;
+  background-color: #dfe6d5; /* 淺橄欖綠 */
+  padding: 3rem 1rem;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #3e3325;
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  color: #5a4b3b;
+}
+
+.services {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  padding: 2rem 1rem;
+}
+
+@media (min-width: 768px) {
   .services {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 2rem 1rem;
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  @media (min-width: 768px) {
-    .services {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  .service-card {
-    background-color: #fffefb;         /* 米白 */
-    border-radius: 1rem;
-    padding: 1.5rem;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    text-align: center;
-    border: 1px solid #ddd3c1;
-  }
-  
-  .service-card h2 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: #4e3c2f;
-  }
-  
-  .about {
-    background-color: #e8e2d0; /* 沙色 */
-    text-align: center;
-    padding: 2.5rem 1rem;
-  }
-  
-  .about h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #3a2e23;
-  }
-  
-  .about p {
-    max-width: 700px;
-    margin: 0 auto;
-    font-size: 1.125rem;
-    color: #4d4134;
-  }
-  
+}
+
+.service-card {
+  background-color: #fffefb; /* 米白 */
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border: 1px solid #ddd3c1;
+}
+
+.service-card h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #4e3c2f;
+}
+
+.about {
+  background-color: #e8e2d0; /* 沙色 */
+  text-align: center;
+  padding: 2.5rem 1rem;
+}
+
+.about h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3a2e23;
+}
+
+.about p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.125rem;
+  color: #4d4134;
+}

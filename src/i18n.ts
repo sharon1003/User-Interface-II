@@ -84,6 +84,8 @@ i18n
                         shape: "Shape",
                         length: "Length",
                         color: "Color",
+                        price: "Price",
+                        totalPrice: "Total Price",
                     },
                     product: {
                         addToCart: "Add to Cart"
@@ -175,6 +177,8 @@ i18n
                         shape: "Hình dáng",
                         length: "Độ dài",
                         color: "Màu sắc",
+                        price: "Giá",
+                        totalPrice: "Tổng giá",
                     },
                     product: {
                         addToCart: "Thêm vào giỏ hàng"
@@ -266,6 +270,8 @@ i18n
                         shape: "Form",
                         length: "Längd",
                         color: "Färg",
+                        price: "Pris",
+                        totalPrice: "Totalt pris",
                     },
                     product: {
                         addToCart: "Lägg till i kundvagnen"
@@ -357,6 +363,8 @@ i18n
                         shape: "形状",
                         length: "长度",
                         color: "颜色",
+                        price: "价格",
+                        totalPrice: "总价",
                     },
                     product: {
                         addToCart: "加入购物车"

@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-  shape: 'almond' | 'oval' | 'squoval' | 'coffin';
-  length: 'short' | 'medium' | 'long';
+  shape: "almond" | "oval" | "squoval" | "coffin";
+  length: "short" | "medium" | "long";
   color: string;
   step: number;
+  totalPrice: number;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface Sticker {
@@ -16,7 +18,14 @@ interface Sticker {
   rotation: number;
 }
 
-const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
+const NailCanvasPreview = ({
+  shape,
+  length,
+  color,
+  step,
+  totalPrice,
+  setTotalPrice,
+}: Props) => {
   const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const soundRef = useRef<HTMLAudioElement | null>(null);
@@ -29,10 +38,21 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const [redoStack, setRedoStack] = useState<Sticker[][]>([]);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
 
-  const playSound = (ref: React.RefObject<HTMLAudioElement>) => {
+  // Sticker price mapping
+  const stickerPrices: Record<string, number> = {
+    "🌸": 1.5,
+    "✨": 2.0,
+    "💫": 2.5,
+    "🖤": 1.0,
+    "🍓": 1.8,
+  };
+
+  const playSound = (ref: React.RefObject<HTMLAudioElement | null>) => {
     if (ref.current) {
       ref.current.currentTime = 0;
-      ref.current.play().catch((err) => console.warn('Audio play failed:', err));
+      ref.current
+        .play()
+        .catch((err) => console.warn("Audio play failed:", err));
     }
   };
 
@@ -55,11 +75,16 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const emoji = e.dataTransfer.getData('sticker');
+    const emoji = e.dataTransfer.getData("sticker");
     const { x, y } = getMousePos(e);
     if (!emoji) return;
 
     playSound(soundRef);
+
+    // Add sticker price to total
+    const stickerPrice = stickerPrices[emoji] || 0;
+    setTotalPrice((prev) => prev + stickerPrice);
+
     updateStickers([...stickers, { emoji, x, y, scale: 1, rotation: 0 }]);
   };
 
@@ -99,6 +124,11 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
       const dist = Math.hypot(sticker.x - x, sticker.y - y);
       if (dist < 20) {
         playSound(deleteSoundRef);
+
+        // Subtract sticker price from total
+        const stickerPrice = stickerPrices[sticker.emoji] || 0;
+        setTotalPrice((prev) => prev - stickerPrice);
+
         updateStickers(stickers.filter((_, index) => index !== i));
         return;
       }
@@ -123,10 +153,9 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
     playSound(redoSoundRef);
   };
 
-
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
     const width = 400;
@@ -144,11 +173,11 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
     const nailHeight = height * 0.1 * lengthRatio;
 
     // draw a larger, more rectangular hand shape
-    ctx.fillStyle = '#FAD8C9';
+    ctx.fillStyle = "#FAD8C9";
     ctx.beginPath();
     ctx.moveTo(140, 460); // bottom left
     ctx.quadraticCurveTo(90, 400, 90, 300); // thumb base moved left
-    
+
     ctx.lineTo(90, 260); // shortened thumb
     ctx.quadraticCurveTo(100, 240, 110, 260);
     ctx.lineTo(135, 320);
@@ -178,18 +207,25 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
 
     const drawNail = (x: number, y: number) => {
       ctx.beginPath();
-      if (shape === 'almond') {
+      if (shape === "almond") {
         ctx.moveTo(x - 10, y);
         ctx.quadraticCurveTo(x, y - nailHeight - 30, x + 8, y);
-      } else if (shape === 'oval') {
+      } else if (shape === "oval") {
         ctx.moveTo(x - 10, y);
-        ctx.bezierCurveTo(x - 10, y - nailHeight, x + 10, y - nailHeight, x + 10, y);
-      } else if (shape === 'squoval') {
+        ctx.bezierCurveTo(
+          x - 10,
+          y - nailHeight,
+          x + 10,
+          y - nailHeight,
+          x + 10,
+          y
+        );
+      } else if (shape === "squoval") {
         ctx.moveTo(x - 10, y);
         ctx.lineTo(x - 10, y - nailHeight);
         ctx.quadraticCurveTo(x, y - nailHeight - 5, x + 10, y - nailHeight);
         ctx.lineTo(x + 10, y);
-      } else if (shape === 'coffin') {
+      } else if (shape === "coffin") {
         ctx.moveTo(x - 6, y);
         ctx.lineTo(x - 8, y - nailHeight);
         ctx.lineTo(x + 8, y - nailHeight);
@@ -212,7 +248,7 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
       ctx.translate(x, y);
       ctx.rotate((rotation * Math.PI) / 180);
       ctx.scale(scale, scale);
-      ctx.font = '20px serif';
+      ctx.font = "20px serif";
       ctx.fillText(emoji, 0, 0);
       ctx.restore();
     });
@@ -228,7 +264,10 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
       onDoubleClick={handleDoubleClick}
       className="w-full flex flex-col justify-center items-center"
     >
-      <canvas ref={canvasRef} className="border rounded w-3/4 h-auto bg-white" />
+      <canvas
+        ref={canvasRef}
+        className="border rounded w-3/4 h-auto bg-white"
+      />
       {step === 4 && (
         <div className="flex gap-2 mt-4">
           <button
@@ -245,6 +284,9 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
           </button>
         </div>
       )}
+      <p className="mt-4 text-lg font-semibold">
+        {t("customize.totalPrice")}: ${totalPrice.toFixed(2)}
+      </p>
       <audio ref={soundRef} src="/sounds/drum.wav" preload="auto" />
       <audio ref={deleteSoundRef} src="/sounds/delete.wav" preload="auto" />
       <audio ref={undoSoundRef} src="/sounds/undo.wav" preload="auto" />
