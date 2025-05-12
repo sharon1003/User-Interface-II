@@ -288,39 +288,39 @@ i18n
             zh: {
                 common: {
                     navbar: {
-                        home: "主页",
+                        home: "首頁",
                         shop: "商店",
-                        customize: "自定义"
+                        customize: "客製化"
                     },
                     home: {
-                        welcome: "欢迎来到 Nail Shop",
-                        ourProduct: "我们的产品",
-                        description: "通过我们最受欢迎的美甲服务，发现你最喜欢的风格。",
+                        welcome: "歡迎來到 Nail Shop",
+                        ourProduct: "我們的產品",
+                        description: "透過我們最受歡迎的美甲服務，發現你最喜歡的風格。",
                         gel: {
-                            title: "光疗美甲",
-                            description: "持久亮丽，提供多种季节性和经典颜色选择。"
+                            title: "光療美甲",
+                            description: "持久亮麗，提供多種季節性和經典顏色選擇。"
                         },
                         natural: {
-                            title: "自然护理",
-                            description: "使用我们的有机护理产品滋养你的指甲和甲缘。"
+                            title: "自然護理",
+                            description: "使用我们的有機護理產品滋養你的指甲和甲緣。"
                         },
                         art: {
-                            title: "美甲艺术",
-                            description: "从极简到大胆，用定制美甲展现你的个性。"
+                            title: "美甲藝術",
+                            description: "從極簡到大膽，用定制美甲展現你的個性。"
                         }
                     },
                     footer: {
-                        quickLinks: "快速链接",
+                        quickLinks: "快速連結",
                         howToApply: "如何使用",
-                        customize: "自定义你的美甲",
-                        faqs: "常见问题",
-                        aboutUs: "关于我们",
-                        moreInfo: "更多信息",
-                        terms: "服务条款",
-                        contactUs: "联系我们"
+                        customize: "客製化你的美甲",
+                        faqs: "常見問題",
+                        aboutUs: "關於我們",
+                        moreInfo: "更多資訊",
+                        terms: "服務條款",
+                        contactUs: "聯絡我們"
                     },
                     shop: {
-                        ourProducts: "我们的产品",
+                        ourProducts: "我們的產品",
                         categories: {
                             all: "全部",
                             gelmanicure: "光疗美甲",
@@ -329,50 +329,50 @@ i18n
                         }
                     },
                     customize: {
-                        title: "设计你的按压美甲",
-                        step1: "步骤 1：选择指甲形状",
+                        title: "設計你的美甲",
+                        step1: "步驟 1：選擇指甲形狀",
                         shapes: {
                             almond: "杏仁形",
-                            oval: "椭圆形",
-                            squoval: "方椭圆形",
+                            oval: "橢圓型",
+                            squoval: "方橢圓型",
                             coffin: "棺材形"
                         },
                         next: "下一步",
-                        step2: "步骤 2：选择长度",
+                        step2: "步驟 2：選擇長度",
                         lengths: {
                             short: "短",
                             medium: "中等",
-                            long: "长"
+                            long: "長"
                         },
                         back: "返回",
-                        step3: "步骤 3：选择颜色",
-                        step4: "步骤 4：选择贴纸",
-                        previewTitle: "实时预览",
-                        previewDescription: "您自定义的美甲预览",
-                        undo: "撤销",
+                        step3: "步驟 3：選擇颜色",
+                        step4: "步驟 4：選擇贴纸",
+                        previewTitle: "即時預覽",
+                        previewDescription: "您定義的美甲預覽圖",
+                        undo: "回到上一步",
                         redo: "重做",
-                        step4Sum: "步骤4：摘要",
+                        step4Sum: "步驟4：摘要",
                         submit: "提交",
-                        savePreview: "保存预览",
-                        shape: "形状",
-                        length: "长度",
-                        color: "颜色",
+                        savePreview: "保存預覽圖",
+                        shape: "性狀",
+                        length: "長度",
+                        color: "顏色",
                     },
                     product: {
-                        addToCart: "加入购物车"
+                        addToCart: "加入購物車"
                     },
                     cart: {
-                        title: "购物车",
-                        empty: "您的购物车是空的。",
-                        total: "总计",
-                        pay: "前往结账",
+                        title: "購物車",
+                        empty: "您的購物車是空的。",
+                        total: "總計",
+                        pay: "前往結帳",
                     },
                     payment: {
                         title: "付款",
-                        method: "选择支付方式",
-                        total: "总计",
+                        method: "選擇支付方式",
+                        total: "總計",
                         payNow: "立即支付",
-                        swishPhone: "Swish 手机号码",
+                        swishPhone: "Swish 手機號碼",
                     }
                 },
             },
