@@ -138,6 +138,19 @@ const NailCanvasPreview = ({
   const undo = () => {
     if (undoStack.length === 0) return;
     const last = undoStack[undoStack.length - 1];
+
+    const currentStickerPrice = stickers.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+    const lastStickerPrice = last.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+
+    // Adjust the total price
+    setTotalPrice((prev) => prev - (currentStickerPrice - lastStickerPrice));
+
     setUndoStack((prev) => prev.slice(0, -1));
     setRedoStack((prev) => [...prev, stickers]);
     setStickers(last);
@@ -147,6 +160,19 @@ const NailCanvasPreview = ({
   const redo = () => {
     if (redoStack.length === 0) return;
     const next = redoStack[redoStack.length - 1];
+
+    const currentStickerPrice = stickers.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+    const nextStickerPrice = next.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+
+    // Adjust the total price
+    setTotalPrice((prev) => prev + (nextStickerPrice - currentStickerPrice));
+
     setRedoStack((prev) => prev.slice(0, -1));
     setUndoStack((prev) => [...prev, stickers]);
     setStickers(next);

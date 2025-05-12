@@ -19,8 +19,7 @@ const CustomizePage = () => {
   const [color, setColor] = useState<string>("#F87171");
 
   const basePrice = 24.99;
-  const [price, setPrice] = useState<string>(basePrice.toFixed(2));
-  const [totalPrice, setTotalPrice] = useState<number>(0); // Add totalPrice state
+  const [totalPrice, setTotalPrice] = useState<number>(basePrice);
 
   const lengthPrice: Record<"short" | "medium" | "long", number> = {
     short: 0,
@@ -31,7 +30,7 @@ const CustomizePage = () => {
   const handleLengthChange = (newLength: "short" | "medium" | "long") => {
     setLength(newLength);
     const newPrice = basePrice + lengthPrice[newLength];
-    setPrice(newPrice.toFixed(2));
+    setTotalPrice(newPrice);
   };
 
   const handleNext = () => setStep((prev) => prev + 1);
@@ -57,7 +56,7 @@ const CustomizePage = () => {
       id: generateId(),
       category: "custom",
       image: imageData,
-      price: "24.99",
+      price: totalPrice.toFixed(2),
       title: "Custom Nail Design",
       description: `Shape: ${shape}, Length: ${length}, Color: ${color}`,
       shape,
@@ -202,7 +201,7 @@ const CustomizePage = () => {
               </p>
               <p>
                 <strong>{t("customize.price")}:</strong> $
-                {(basePrice + totalPrice).toFixed(2)}
+                {totalPrice.toFixed(2)}
               </p>
               <div className="mt-4 text-center">
                 <button
