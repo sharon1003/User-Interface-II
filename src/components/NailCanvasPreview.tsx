@@ -14,20 +14,27 @@ interface Sticker {
   y: number;
   scale: number;
   rotation: number;
+  imageUrl?: string; // Add optional imageUrl for custom uploaded stickers
 }
 
 const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const soundRef = useRef<HTMLAudioElement | null>(null);
   const deleteSoundRef = useRef<HTMLAudioElement | null>(null);
   const redoSoundRef = useRef<HTMLAudioElement | null>(null);
   const undoSoundRef = useRef<HTMLAudioElement | null>(null);
+  const uploadSoundRef = useRef<HTMLAudioElement | null>(null);
 
   const [stickers, setStickers] = useState<Sticker[]>([]);
   const [undoStack, setUndoStack] = useState<Sticker[][]>([]);
   const [redoStack, setRedoStack] = useState<Sticker[][]>([]);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
+  const [customStickers, setCustomStickers] = useState<{emoji: string, imageUrl: string}[]>([]);
+  
+  // Image cache to prevent reloading
+  const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
   const playSound = (ref: React.RefObject<HTMLAudioElement>) => {
     if (ref.current) {
@@ -56,11 +63,24 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     const emoji = e.dataTransfer.getData('sticker');
+    const imageUrl = e.dataTransfer.getData('image-url');
     const { x, y } = getMousePos(e);
-    if (!emoji) return;
+    
+    if (!emoji && !imageUrl) return;
 
     playSound(soundRef);
-    updateStickers([...stickers, { emoji, x, y, scale: 1, rotation: 0 }]);
+    
+    updateStickers([
+      ...stickers, 
+      { 
+        emoji: emoji || "📸", // Use camera emoji as placeholder for image stickers
+        x, 
+        y, 
+        scale: 0.7, 
+        rotation: 0,
+        imageUrl: imageUrl || undefined
+      }
+    ]);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -123,6 +143,44 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
     playSound(redoSoundRef);
   };
 
+  // Handle file upload
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    
+    const file = files[0];
+    if (!file.type.startsWith('image/')) {
+      alert(t('customize.onlyImagesAllowed'));
+      return;
+    }
+
+    // Create object URL for the uploaded image
+    const imageUrl = URL.createObjectURL(file);
+    
+    // Create a placeholder emoji (camera icon)
+    const emoji = "📸"; 
+    
+    // Add to custom stickers
+    setCustomStickers(prev => [...prev, { emoji, imageUrl }]);
+    
+    // Preload the image
+    const img = new Image();
+    img.src = imageUrl;
+    imageCache.current.set(imageUrl, img);
+    
+    playSound(uploadSoundRef);
+    
+    // Reset the file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  // Handle custom sticker drag
+  const handleCustomStickerDrag = (imageUrl: string, emoji: string) => (e: React.DragEvent) => {
+    e.dataTransfer.setData('sticker', emoji);
+    e.dataTransfer.setData('image-url', imageUrl);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -190,10 +248,10 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
         ctx.quadraticCurveTo(x, y - nailHeight - 5, x + 10, y - nailHeight);
         ctx.lineTo(x + 10, y);
       } else if (shape === 'coffin') {
-        ctx.moveTo(x - 6, y);
-        ctx.lineTo(x - 8, y - nailHeight);
-        ctx.lineTo(x + 8, y - nailHeight);
-        ctx.lineTo(x + 6, y);
+        ctx.moveTo(x - 9, y);
+        ctx.lineTo(x - 11, y - nailHeight);
+        ctx.lineTo(x + 11, y - nailHeight);
+        ctx.lineTo(x + 9, y);
       }
       ctx.closePath();
       ctx.fill();
@@ -206,49 +264,135 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
     drawNail(250, 160); // ring
     drawNail(290, 180); // pinky
 
-    // ✨ Draw placed stickers
-    stickers.forEach(({ emoji, x, y, scale, rotation }) => {
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate((rotation * Math.PI) / 180);
-      ctx.scale(scale, scale);
-      ctx.font = '20px serif';
-      ctx.fillText(emoji, 0, 0);
-      ctx.restore();
-    });
+    // Draw placed stickers (with async handling for images)
+    const drawStickers = async () => {
+      for (const { emoji, x, y, scale, rotation, imageUrl } of stickers) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate((rotation * Math.PI) / 180);
+        ctx.scale(scale, scale);
+        
+        if (imageUrl) {
+          // Draw custom image sticker
+          let img: HTMLImageElement;
+          
+          if (imageCache.current.has(imageUrl)) {
+            img = imageCache.current.get(imageUrl)!;
+            if (img.complete) {
+              // Calculate size to keep aspect ratio but cap at reasonable size
+              const maxSize = 40;
+              const ratio = Math.min(maxSize / img.width, maxSize / img.height);
+              const width = img.width * ratio;
+              const height = img.height * ratio;
+              ctx.drawImage(img, -width/2, -height/2, width, height);
+            }
+          } else {
+            // Load and cache the image if not already cached
+            img = new Image();
+            img.src = imageUrl;
+            imageCache.current.set(imageUrl, img);
+            
+            img.onload = () => {
+              // Redraw when image loads
+              const currentCanvas = canvasRef.current;
+              if (currentCanvas) {
+                const currentCtx = currentCanvas.getContext('2d');
+                if (currentCtx) {
+                  // Force redraw
+                  setStickers(prev => [...prev]);
+                }
+              }
+            };
+          }
+        } else {
+          // Draw emoji sticker
+          ctx.font = '20px serif';
+          ctx.fillText(emoji, -10, 10); // Center the emoji better
+        }
+        
+        ctx.restore();
+      }
+    };
+    
+    drawStickers();
   }, [shape, length, color, stickers]);
 
   return (
-    <div
-      onDrop={handleDrop}
-      onDragOver={(e) => e.preventDefault()}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onDoubleClick={handleDoubleClick}
-      className="w-full flex flex-col justify-center items-center"
-    >
-      <canvas ref={canvasRef} className="border rounded w-3/4 h-auto bg-white" />
+    <div className="w-full flex flex-col justify-center items-center">
+      <div 
+        onDrop={handleDrop}
+        onDragOver={(e) => e.preventDefault()}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onDoubleClick={handleDoubleClick}
+        className="w-full flex flex-col justify-center items-center"
+      >
+        <canvas ref={canvasRef} className="border rounded w-3/4 h-auto bg-white" />
+      </div>
+      
       {step === 4 && (
-        <div className="flex gap-2 mt-4">
-          <button
-            onClick={undo}
-            className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
-          >
-            {t("customize.undo")}
-          </button>
-          <button
-            onClick={redo}
-            className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
-          >
-            {t("customize.redo")}
-          </button>
-        </div>
+        <>
+          <div className="flex gap-2 mt-4">
+            <button
+              onClick={undo}
+              className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
+            >
+              {t("customize.undo")}
+            </button>
+            <button
+              onClick={redo}
+              className="px-4 py-2 bg-gray-200 rounded shadow hover:bg-gray-300 active:scale-95 transition"
+            >
+              {t("customize.redo")}
+            </button>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="px-4 py-2 bg-blue-200 rounded shadow hover:bg-blue-300 active:scale-95 transition"
+            >
+              {t("customize.uploadSticker")}
+            </button>
+          </div>
+          
+          {/* Hidden file input */}
+          <input 
+            type="file" 
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            accept="image/*"
+            className="hidden" 
+          />
+          
+          {/* Custom stickers section */}
+          {customStickers.length > 0 && (
+            <div className="mt-4 w-3/4">
+              <h3 className="text-sm font-medium mb-2">{t("customize.myStickers")}</h3>
+              <div className="flex flex-wrap gap-2">
+                {customStickers.map((sticker, index) => (
+                  <div 
+                    key={index}
+                    draggable
+                    onDragStart={handleCustomStickerDrag(sticker.imageUrl, sticker.emoji)}
+                    className="w-12 h-12 border rounded flex items-center justify-center bg-white cursor-grab hover:border-blue-400"
+                  >
+                    <img 
+                      src={sticker.imageUrl} 
+                      alt="Custom sticker" 
+                      className="max-w-full max-h-full object-contain" 
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       )}
+      
       <audio ref={soundRef} src="/sounds/drum.wav" preload="auto" />
       <audio ref={deleteSoundRef} src="/sounds/delete.wav" preload="auto" />
       <audio ref={undoSoundRef} src="/sounds/undo.wav" preload="auto" />
       <audio ref={redoSoundRef} src="/sounds/redo.wav" preload="auto" />
+      <audio ref={uploadSoundRef} src="/sounds/upload.wav" preload="auto" />
     </div>
   );
 };
