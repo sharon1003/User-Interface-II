@@ -8,7 +8,13 @@ type ServiceCardProps = {
   onReadMore?: () => void;
 };
 
-const ServiceCard = ({ icon, title, description, price, onReadMore }: ServiceCardProps) => {
+const ServiceCard = ({
+  icon,
+  title,
+  description,
+  price,
+  onReadMore,
+}: ServiceCardProps) => {
   return (
     <div className="service-card bg-white rounded-xl p-6 shadow hover:shadow-md transition">
       <h2 className="text-xl font-semibold mb-2">
@@ -27,4 +33,3 @@ const ServiceCard = ({ icon, title, description, price, onReadMore }: ServiceCar
 };
 
 export default ServiceCard;
-

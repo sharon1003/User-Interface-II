@@ -78,12 +78,14 @@ i18n
                         previewDescription: "Your customized nail preview",
                         undo: "Undo",
                         redo: "Redo",
-                        step4Sum: "Step 4: Summary",
+                        step5: "Step 5: Summary",
                         submit: "Submit",
                         savePreview: "Save Preview",
                         shape: "Shape",
                         length: "Length",
                         color: "Color",
+                        price: "Price",
+                        totalPrice: "Total Price",
                     },
                     product: {
                         addToCart: "Add to Cart"
@@ -169,12 +171,14 @@ i18n
                         previewDescription: "Bản xem trước móng tay bạn đã tùy chỉnh",
                         undo: "Hoàn tác",
                         redo: "Làm lại",
-                        step4Sum: "Bước 4: Tóm tắt",
+                        step5: "Bước 5: Tóm tắt",
                         submit: "Gửi",
                         savePreview: "Lưu bản xem trước",
                         shape: "Hình dáng",
                         length: "Độ dài",
                         color: "Màu sắc",
+                        price: "Giá",
+                        totalPrice: "Tổng giá",
                     },
                     product: {
                         addToCart: "Thêm vào giỏ hàng"
@@ -260,12 +264,14 @@ i18n
                         previewDescription: "Din anpassade nagel visas här",
                         undo: "Ångra",
                         redo: "Gör om",
-                        step4Sum: "Steg 4: Sammanfattning",
+                        step5: "Steg 5: Sammanfattning",
                         submit: "Skicka",
                         savePreview: "Spara förhandsvisning",
                         shape: "Form",
                         length: "Längd",
                         color: "Färg",
+                        price: "Pris",
+                        totalPrice: "Totalt pris",
                     },
                     product: {
                         addToCart: "Lägg till i kundvagnen"
@@ -351,12 +357,14 @@ i18n
                         previewDescription: "您定義的美甲預覽圖",
                         undo: "回到上一步",
                         redo: "重做",
-                        step4Sum: "步驟4：摘要",
+                        step5: "步驟5：摘要",
                         submit: "提交",
                         savePreview: "保存預覽圖",
                         shape: "性狀",
                         length: "長度",
                         color: "顏色",
+                        price: "價格",
+                        totalPrice: "總價",
                     },
                     product: {
                         addToCart: "加入購物車"

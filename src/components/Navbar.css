@@ -1,31 +1,30 @@
 /* Navbar.css */
 
 .navbar-button {
-    transition: transform 0.15s ease, color 0.2s ease;
-  }
-  
-  .navbar-button:hover {
-    color: #047857; /* Tailwind's green-700 */
-  }
-  
-  .navbar-button:active {
-    transform: scale(0.9);
-  }
-  
-  .navbar-link {
-    transition: color 0.2s ease, transform 0.15s ease;
-  }
-  
-  .navbar-link:hover {
-    color: #047857;
-  }
-  
-  .navbar-link:active {
-    transform: scale(0.95);
-  }
-  
-  .navbar-logo:hover {
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-  }
-  
+  transition: transform 0.15s ease, color 0.2s ease;
+}
+
+.navbar-button:hover {
+  color: #047857; /* Tailwind's green-700 */
+}
+
+.navbar-button:active {
+  transform: scale(0.9);
+}
+
+.navbar-link {
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.navbar-link:hover {
+  color: #047857;
+}
+
+.navbar-link:active {
+  transform: scale(0.95);
+}
+
+.navbar-logo:hover {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}

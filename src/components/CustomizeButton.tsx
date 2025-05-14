@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 
 interface Props {
   onClick: () => void;
@@ -8,14 +8,22 @@ interface Props {
   soundSrc?: string;
 }
 
-const CustomizeButton: React.FC<Props> = ({ onClick, children, disabled, className, soundSrc = '/sounds/next.wav' }) => {
+const CustomizeButton: React.FC<Props> = ({
+  onClick,
+  children,
+  disabled,
+  className,
+  soundSrc = "/sounds/next.wav",
+}) => {
   const soundRef = useRef<HTMLAudioElement | null>(null);
 
   const handleClick = () => {
     if (soundRef.current) {
-        console.log("Audio Failed");
+      console.log("Audio Failed");
       soundRef.current.currentTime = 0;
-      soundRef.current.play().catch((err) => console.warn('Audio play failed:', err));
+      soundRef.current
+        .play()
+        .catch((err) => console.warn("Audio play failed:", err));
     }
     onClick();
   };
@@ -25,7 +33,9 @@ const CustomizeButton: React.FC<Props> = ({ onClick, children, disabled, classNa
       <button
         onClick={handleClick}
         disabled={disabled}
-        className={`px-4 py-2 rounded ${className} ${disabled ? 'opacity-50' : ''}`}
+        className={`px-4 py-2 rounded ${className} ${
+          disabled ? "opacity-50" : ""
+        }`}
       >
         {children}
       </button>
