@@ -81,12 +81,14 @@ i18n
                         uploadSticker: "Upload Image",
                         myStickers: "My Own Stickers",
                         onlyImagesAllowed: "Only Images Allowed",
-                        step4Sum: "Step 4: Summary",
+                        step5: "Step 5: Summary",
                         submit: "Submit",
                         savePreview: "Save Preview",
                         shape: "Shape",
                         length: "Length",
                         color: "Color",
+                        price: "Price",
+                        totalPrice: "Total Price",
                     },
                     product: {
                         addToCart: "Add to Cart"
@@ -175,12 +177,14 @@ i18n
                         uploadSticker: "Tải lên hình ảnh",
                         myStickers: "Hình dán của riêng tôi",
                         onlyImagesAllowed: "Chỉ cho phép hình ảnh",
-                        step4Sum: "Bước 4: Tóm tắt",
+                        step5: "Bước 5: Tóm tắt",
                         submit: "Gửi",
                         savePreview: "Lưu bản xem trước",
                         shape: "Hình dáng",
                         length: "Độ dài",
                         color: "Màu sắc",
+                        price: "Giá",
+                        totalPrice: "Tổng giá",
                     },
                     product: {
                         addToCart: "Thêm vào giỏ hàng"
@@ -269,12 +273,14 @@ i18n
                         uploadSticker: "Ladda upp bild",
                         myStickers: "Mina egna klistermärken",
                         onlyImagesAllowed: "Endast bilder tillåtna",
-                        step4Sum: "Steg 4: Sammanfattning",
+                        step5: "Steg 5: Sammanfattning",
                         submit: "Skicka",
                         savePreview: "Spara förhandsvisning",
                         shape: "Form",
                         length: "Längd",
                         color: "Färg",
+                        price: "Pris",
+                        totalPrice: "Totalt pris",
                     },
                     product: {
                         addToCart: "Lägg till i kundvagnen"
@@ -363,12 +369,14 @@ i18n
                         uploadSticker: "上傳圖片",
                         myStickers: "我自己的贴纸",
                         onlyImagesAllowed: "僅允許圖片",
-                        step4Sum: "步驟4：摘要",
+                        step5: "步驟5：摘要",
                         submit: "提交",
                         savePreview: "保存預覽圖",
                         shape: "形狀",
                         length: "長度",
                         color: "顏色",
+                        price: "價格",
+                        totalPrice: "總價",
                     },
                     product: {
                         addToCart: "加入購物車"

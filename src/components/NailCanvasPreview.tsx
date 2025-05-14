@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 interface Props {
-  shape: 'almond' | 'oval' | 'squoval' | 'coffin';
-  length: 'short' | 'medium' | 'long';
+  shape: "almond" | "oval" | "squoval" | "coffin";
+  length: "short" | "medium" | "long";
   color: string;
   step: number;
+  totalPrice: number;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
 }
 
 interface Sticker {
@@ -17,7 +19,14 @@ interface Sticker {
   imageUrl?: string; // Add optional imageUrl for custom uploaded stickers
 }
 
-const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
+const NailCanvasPreview = ({
+  shape,
+  length,
+  color,
+  step,
+  totalPrice,
+  setTotalPrice,
+}: Props) => {
   const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,15 +40,28 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const [undoStack, setUndoStack] = useState<Sticker[][]>([]);
   const [redoStack, setRedoStack] = useState<Sticker[][]>([]);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
-  const [customStickers, setCustomStickers] = useState<{emoji: string, imageUrl: string}[]>([]);
-  
+  const [customStickers, setCustomStickers] = useState<
+    { emoji: string; imageUrl: string }[]
+  >([]);
+
   // Image cache to prevent reloading
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
 
-  const playSound = (ref: React.RefObject<HTMLAudioElement>) => {
+  // Sticker price mapping
+  const stickerPrices: Record<string, number> = {
+    "🌸": 1.5,
+    "✨": 2.0,
+    "💫": 2.5,
+    "🖤": 1.0,
+    "🍓": 1.8,
+  };
+
+  const playSound = (ref: React.RefObject<HTMLAudioElement | null>) => {
     if (ref.current) {
       ref.current.currentTime = 0;
-      ref.current.play().catch((err) => console.warn('Audio play failed:', err));
+      ref.current
+        .play()
+        .catch((err) => console.warn("Audio play failed:", err));
     }
   };
 
@@ -62,24 +84,28 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const emoji = e.dataTransfer.getData('sticker');
-    const imageUrl = e.dataTransfer.getData('image-url');
+    const emoji = e.dataTransfer.getData("sticker");
+    const imageUrl = e.dataTransfer.getData("image-url");
     const { x, y } = getMousePos(e);
-    
+
     if (!emoji && !imageUrl) return;
 
     playSound(soundRef);
-    
+
+    // Add sticker price to total
+    const stickerPrice = stickerPrices[emoji] || 0;
+    setTotalPrice((prev) => prev + stickerPrice);
+
     updateStickers([
-      ...stickers, 
-      { 
+      ...stickers,
+      {
         emoji: emoji || "📸", // Use camera emoji as placeholder for image stickers
-        x, 
-        y, 
-        scale: 0.7, 
+        x,
+        y,
+        scale: 0.7,
         rotation: 0,
-        imageUrl: imageUrl || undefined
-      }
+        imageUrl: imageUrl || undefined,
+      },
     ]);
   };
 
@@ -119,6 +145,11 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
       const dist = Math.hypot(sticker.x - x, sticker.y - y);
       if (dist < 20) {
         playSound(deleteSoundRef);
+
+        // Subtract sticker price from total
+        const stickerPrice = stickerPrices[sticker.emoji] || 0;
+        setTotalPrice((prev) => prev - stickerPrice);
+
         updateStickers(stickers.filter((_, index) => index !== i));
         return;
       }
@@ -128,6 +159,19 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const undo = () => {
     if (undoStack.length === 0) return;
     const last = undoStack[undoStack.length - 1];
+
+    const currentStickerPrice = stickers.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+    const lastStickerPrice = last.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+
+    // Adjust the total price
+    setTotalPrice((prev) => prev - (currentStickerPrice - lastStickerPrice));
+
     setUndoStack((prev) => prev.slice(0, -1));
     setRedoStack((prev) => [...prev, stickers]);
     setStickers(last);
@@ -137,54 +181,67 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
   const redo = () => {
     if (redoStack.length === 0) return;
     const next = redoStack[redoStack.length - 1];
+
+    const currentStickerPrice = stickers.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+    const nextStickerPrice = next.reduce(
+      (sum, sticker) => sum + (stickerPrices[sticker.emoji] || 0),
+      0
+    );
+
+    // Adjust the total price
+    setTotalPrice((prev) => prev + (nextStickerPrice - currentStickerPrice));
+
     setRedoStack((prev) => prev.slice(0, -1));
     setUndoStack((prev) => [...prev, stickers]);
     setStickers(next);
     playSound(redoSoundRef);
   };
-
   // Handle file upload
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
-    
+
     const file = files[0];
-    if (!file.type.startsWith('image/')) {
-      alert(t('customize.onlyImagesAllowed'));
+    if (!file.type.startsWith("image/")) {
+      alert(t("customize.onlyImagesAllowed"));
       return;
     }
 
     // Create object URL for the uploaded image
     const imageUrl = URL.createObjectURL(file);
-    
+
     // Create a placeholder emoji (camera icon)
-    const emoji = "📸"; 
-    
+    const emoji = "📸";
+
     // Add to custom stickers
-    setCustomStickers(prev => [...prev, { emoji, imageUrl }]);
-    
+    setCustomStickers((prev) => [...prev, { emoji, imageUrl }]);
+
     // Preload the image
     const img = new Image();
     img.src = imageUrl;
     imageCache.current.set(imageUrl, img);
-    
+
     playSound(uploadSoundRef);
-    
+
     // Reset the file input
     if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+      fileInputRef.current.value = "";
     }
   };
 
   // Handle custom sticker drag
-  const handleCustomStickerDrag = (imageUrl: string, emoji: string) => (e: React.DragEvent) => {
-    e.dataTransfer.setData('sticker', emoji);
-    e.dataTransfer.setData('image-url', imageUrl);
-  };
+  const handleCustomStickerDrag =
+    (imageUrl: string, emoji: string) => (e: React.DragEvent) => {
+      e.dataTransfer.setData("sticker", emoji);
+      e.dataTransfer.setData("image-url", imageUrl);
+    };
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
     const width = 400;
@@ -202,11 +259,11 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
     const nailHeight = height * 0.1 * lengthRatio;
 
     // draw a larger, more rectangular hand shape
-    ctx.fillStyle = '#FAD8C9';
+    ctx.fillStyle = "#FAD8C9";
     ctx.beginPath();
     ctx.moveTo(140, 460); // bottom left
     ctx.quadraticCurveTo(90, 400, 90, 300); // thumb base moved left
-    
+
     ctx.lineTo(90, 260); // shortened thumb
     ctx.quadraticCurveTo(100, 240, 110, 260);
     ctx.lineTo(135, 320);
@@ -236,18 +293,25 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
 
     const drawNail = (x: number, y: number) => {
       ctx.beginPath();
-      if (shape === 'almond') {
+      if (shape === "almond") {
         ctx.moveTo(x - 10, y);
         ctx.quadraticCurveTo(x, y - nailHeight - 30, x + 8, y);
-      } else if (shape === 'oval') {
+      } else if (shape === "oval") {
         ctx.moveTo(x - 10, y);
-        ctx.bezierCurveTo(x - 10, y - nailHeight, x + 10, y - nailHeight, x + 10, y);
-      } else if (shape === 'squoval') {
+        ctx.bezierCurveTo(
+          x - 10,
+          y - nailHeight,
+          x + 10,
+          y - nailHeight,
+          x + 10,
+          y
+        );
+      } else if (shape === "squoval") {
         ctx.moveTo(x - 10, y);
         ctx.lineTo(x - 10, y - nailHeight);
         ctx.quadraticCurveTo(x, y - nailHeight - 5, x + 10, y - nailHeight);
         ctx.lineTo(x + 10, y);
-      } else if (shape === 'coffin') {
+      } else if (shape === "coffin") {
         ctx.moveTo(x - 9, y);
         ctx.lineTo(x - 11, y - nailHeight);
         ctx.lineTo(x + 11, y - nailHeight);
@@ -271,11 +335,11 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
         ctx.translate(x, y);
         ctx.rotate((rotation * Math.PI) / 180);
         ctx.scale(scale, scale);
-        
+
         if (imageUrl) {
           // Draw custom image sticker
           let img: HTMLImageElement;
-          
+
           if (imageCache.current.has(imageUrl)) {
             img = imageCache.current.get(imageUrl)!;
             if (img.complete) {
@@ -284,42 +348,42 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
               const ratio = Math.min(maxSize / img.width, maxSize / img.height);
               const width = img.width * ratio;
               const height = img.height * ratio;
-              ctx.drawImage(img, -width/2, -height/2, width, height);
+              ctx.drawImage(img, -width / 2, -height / 2, width, height);
             }
           } else {
             // Load and cache the image if not already cached
             img = new Image();
             img.src = imageUrl;
             imageCache.current.set(imageUrl, img);
-            
+
             img.onload = () => {
               // Redraw when image loads
               const currentCanvas = canvasRef.current;
               if (currentCanvas) {
-                const currentCtx = currentCanvas.getContext('2d');
+                const currentCtx = currentCanvas.getContext("2d");
                 if (currentCtx) {
                   // Force redraw
-                  setStickers(prev => [...prev]);
+                  setStickers((prev) => [...prev]);
                 }
               }
             };
           }
         } else {
           // Draw emoji sticker
-          ctx.font = '20px serif';
+          ctx.font = "20px serif";
           ctx.fillText(emoji, -10, 10); // Center the emoji better
         }
-        
+
         ctx.restore();
       }
     };
-    
+
     drawStickers();
   }, [shape, length, color, stickers]);
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div 
+      <div
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         onMouseDown={handleMouseDown}
@@ -328,9 +392,12 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
         onDoubleClick={handleDoubleClick}
         className="w-full flex flex-col justify-center items-center"
       >
-        <canvas ref={canvasRef} className="border rounded w-3/4 h-auto bg-white" />
+        <canvas
+          ref={canvasRef}
+          className="border rounded w-3/4 h-auto bg-white"
+        />
       </div>
-      
+
       {step === 4 && (
         <>
           <div className="flex gap-2 mt-4">
@@ -353,32 +420,37 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
               {t("customize.uploadSticker")}
             </button>
           </div>
-          
+
           {/* Hidden file input */}
-          <input 
-            type="file" 
+          <input
+            type="file"
             ref={fileInputRef}
             onChange={handleFileUpload}
             accept="image/*"
-            className="hidden" 
+            className="hidden"
           />
-          
+
           {/* Custom stickers section */}
           {customStickers.length > 0 && (
             <div className="mt-4 w-3/4">
-              <h3 className="text-sm font-medium mb-2">{t("customize.myStickers")}</h3>
+              <h3 className="text-sm font-medium mb-2">
+                {t("customize.myStickers")}
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {customStickers.map((sticker, index) => (
-                  <div 
+                  <div
                     key={index}
                     draggable
-                    onDragStart={handleCustomStickerDrag(sticker.imageUrl, sticker.emoji)}
+                    onDragStart={handleCustomStickerDrag(
+                      sticker.imageUrl,
+                      sticker.emoji
+                    )}
                     className="w-12 h-12 border rounded flex items-center justify-center bg-white cursor-grab hover:border-blue-400"
                   >
-                    <img 
-                      src={sticker.imageUrl} 
-                      alt="Custom sticker" 
-                      className="max-w-full max-h-full object-contain" 
+                    <img
+                      src={sticker.imageUrl}
+                      alt="Custom sticker"
+                      className="max-w-full max-h-full object-contain"
                     />
                   </div>
                 ))}
@@ -387,7 +459,10 @@ const NailCanvasPreview = ({ shape, length, color, step }: Props) => {
           )}
         </>
       )}
-      
+
+      <p className="mt-4 text-lg font-semibold">
+        {t("customize.totalPrice")}: ${totalPrice.toFixed(2)}
+      </p>
       <audio ref={soundRef} src="/sounds/drum.wav" preload="auto" />
       <audio ref={deleteSoundRef} src="/sounds/delete.wav" preload="auto" />
       <audio ref={undoSoundRef} src="/sounds/undo.wav" preload="auto" />

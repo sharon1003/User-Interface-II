@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import './Footer.css';
+import "./Footer.css";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -9,10 +9,18 @@ const Footer = () => {
         <div className="footer-col">
           <h4>{t("footer.quickLinks")}</h4>
           <ul>
-            <li><a href="#">{t("footer.howToApply")}</a></li>
-            <li><a href="#">{t("footer.customize")}</a></li>
-            <li><a href="#">{t("footer.faqs")}</a></li>
-            <li><a href="#">{t("footer.aboutUs")}</a></li>
+            <li>
+              <a href="#">{t("footer.howToApply")}</a>
+            </li>
+            <li>
+              <a href="#">{t("footer.customize")}</a>
+            </li>
+            <li>
+              <a href="#">{t("footer.faqs")}</a>
+            </li>
+            <li>
+              <a href="#">{t("footer.aboutUs")}</a>
+            </li>
           </ul>
         </div>
 
@@ -20,7 +28,9 @@ const Footer = () => {
           <h4>{t("footer.moreInfo")}</h4>
           <ul>
             {/* <li><a href="#">Search</a></li> */}
-            <li><a href="#">{t("footer.terms")}</a></li>
+            <li>
+              <a href="#">{t("footer.terms")}</a>
+            </li>
             {/* <li><a href="#">Refund Policy</a></li> */}
           </ul>
         </div>
@@ -29,8 +39,12 @@ const Footer = () => {
           <h4>{t("footer.contactUs")}</h4>
           <p>info@nailshop.com</p>
           <div className="social-icons">
-            <a href="#"><i className="fab fa-facebook"></i></a>
-            <a href="#"><i className="fab fa-instagram"></i></a>
+            <a href="#">
+              <i className="fab fa-facebook"></i>
+            </a>
+            <a href="#">
+              <i className="fab fa-instagram"></i>
+            </a>
             {/* <a href="#"><i className="fab fa-tiktok"></i></a> */}
             {/* <a href="#"><i className="fab fa-pinterest"></i></a> */}
           </div>
