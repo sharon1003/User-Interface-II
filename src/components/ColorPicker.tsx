@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   selectedColor: string;
@@ -6,6 +7,8 @@ interface Props {
 }
 
 function ColorPicker({ selectedColor, onColorSelect }: Props) {
+  const { t } = useTranslation(); // Add translation hook
+
   function handleColorChange(event: React.ChangeEvent<HTMLInputElement>) {
     onColorSelect(event.target.value);
   }
@@ -13,7 +16,7 @@ function ColorPicker({ selectedColor, onColorSelect }: Props) {
   return (
     <div className="color-picker-container flex flex-col items-center gap-4">
       <label className="text-sm text-gray-600">
-        Custom Color: {selectedColor}
+      {t("customize.customColor")}: {selectedColor} {/* Use translation key */}
       </label>
       <input
         type="color"

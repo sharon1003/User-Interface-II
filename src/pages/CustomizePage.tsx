@@ -146,42 +146,33 @@ const CustomizePage = () => {
           )}
 
           {step === 4 && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">
-                {t("customize.step4")}
-              </h2>
-              <p className="text-sm text-gray-500 mb-4 text-center">
-                👉 Drag a sticker onto the nail canvas. You can{" "}
-                <strong>drag</strong> to move, and <strong>click twice</strong>{" "}
-                to delete.
-              </p>
-              <SelectPicture />
-              {/* Reset Button */}
-              {/* <div className="mt-4 text-center">
-                <button
-                    onClick={() => setStickers([])}
-                    className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                >
-                    Reset Stickers
-                </button>
-            </div> */}
-              <div className="mt-6 flex justify-between">
-                <CustomizeButton
-                  onClick={handleBack}
-                  soundSrc="/sounds/back.wav"
-                  className="border"
-                >
-                  {t("customize.back")}
-                </CustomizeButton>
-                <CustomizeButton
-                  onClick={handleNext}
-                  soundSrc="/sounds/next.wav"
-                  className="bg-black text-white"
-                >
-                  {t("customize.next")}
-                </CustomizeButton>
-              </div>
-            </>
+              <>
+                  <h2 className="text-xl font-semibold mb-2">
+                      {t("customize.step4")}
+                  </h2>
+                  <p className="text-sm text-gray-500 mb-4 text-center">
+                      {t("customize.stickersHelper.prefix")} <strong>{t("customize.stickersHelper.drag")}</strong> {t("customize.stickersHelper.middle")} <strong>{t("customize.stickersHelper.doubleClick")}</strong> {t("customize.stickersHelper.suffix")}
+                  </p>
+                  <SelectPicture/>
+                  {/* Reset Button */}
+                  {/* <div className="mt-4 text-center">
+                      <button
+                          onClick={() => setStickers([])}
+                          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                      >
+                          Reset Stickers
+                      </button>
+                  </div> */}
+                  <div className="mt-6 flex justify-between">
+                      <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
+                          {t("customize.back")}
+                      </CustomizeButton>
+                      <CustomizeButton onClick={handleNext} soundSrc="/sounds/next.wav"
+                                      className="bg-black text-white">
+                          {t("customize.next")}
+                      </CustomizeButton>
+                  </div>
+              </>
           )}
 
           {step === 5 && (

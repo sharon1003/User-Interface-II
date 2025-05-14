@@ -30,8 +30,8 @@ export const allProducts: ProductData[] = [
                 description: "Färgovergång från orange till rosa.",
             },
             zh: {
-                title: "日落渐变",
-                description: "从橙色到粉色的渐变效果。",
+                title: "日落漸變",
+                description: "從橘色到粉紅色的漸層效果。",
             }
         }
     },
@@ -54,8 +54,8 @@ export const allProducts: ProductData[] = [
                 description: "Djärv och självsäker – perfekt för formella tillfällen.",
             },
             zh: {
-                title: "光泽酒红",
-                description: "大胆而自信，适合正式场合的理想选择。",
+                title: "光澤酒紅",
+                description: "大膽自信，適合正式場合的理想選擇。",
             },
         }
     },
@@ -78,8 +78,8 @@ export const allProducts: ProductData[] = [
                 description: "Lugnande och återfuktande behandling.",
             },
             zh: {
-                title: "芦荟护理",
-                description: "舒缓和保湿的护理方案。",
+                title: "蘆薈護理",
+                description: "舒緩和保濕的護理方案。",
             },
         }
     },
@@ -103,8 +103,8 @@ export const allProducts: ProductData[] = [
                 description: "Antioxidantrik gel med en fräsch och lugnande doft.",
             },
             zh: {
-                title: "绿茶护盾",
-                description: "富含抗氧化剂的凝胶，具有清新舒缓的香气。",
+                title: "綠茶防護",
+                description: "富含抗氧化劑的凝膠，具有清新舒緩的香氣。",
             },
         }
     },
@@ -127,8 +127,8 @@ export const allProducts: ProductData[] = [
                 description: "En blandning av pastellfärger med blom-inspirerade accenter.",
             },
             zh: {
-                title: "粉彩花园",
-                description: "结合粉彩色彩与花卉灵感的点缀设计。",
+                title: "粉彩花園",
+                description: "結合粉彩色彩與花卉靈感的點綴設計。",
             },
         }
     },
@@ -152,8 +152,8 @@ export const allProducts: ProductData[] = [
                 description: "Stjärnklara naglar med glittrande effekt.",
             },
             zh: {
-                title: "银河闪耀",
-                description: "如星空般闪亮的美甲设计。",
+                title: "銀河閃耀",
+                description: "如星空般閃亮的美甲設計。",
             },
         }
     },
