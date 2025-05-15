@@ -1,14 +1,7 @@
+import { stickerPrices } from "../constants";
+
 const SelectPicture = () => {
   const stickerOptions = ["🌸", "✨", "💫", "🖤", "🍓"];
-
-  // Add a price mapping for each sticker
-  const stickerPrices: Record<string, number> = {
-    "🌸": 1.5,
-    "✨": 2.0,
-    "💫": 2.5,
-    "🖤": 1.0,
-    "🍓": 1.8,
-  };
 
   return (
     <div className="flex gap-4 flex-wrap justify-center">

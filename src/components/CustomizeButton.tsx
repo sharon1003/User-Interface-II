@@ -1,4 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
+import { useSound } from "./useSound";
 
 interface Props {
   onClick: () => void;
@@ -15,32 +16,23 @@ const CustomizeButton: React.FC<Props> = ({
   className,
   soundSrc = "/sounds/next.wav",
 }) => {
-  const soundRef = useRef<HTMLAudioElement | null>(null);
+  const { playSound } = useSound();
 
   const handleClick = () => {
-    if (soundRef.current) {
-      console.log("Audio Failed");
-      soundRef.current.currentTime = 0;
-      soundRef.current
-        .play()
-        .catch((err) => console.warn("Audio play failed:", err));
-    }
+    playSound("button", soundSrc);
     onClick();
   };
 
   return (
-    <>
-      <button
-        onClick={handleClick}
-        disabled={disabled}
-        className={`px-4 py-2 rounded ${className} ${
-          disabled ? "opacity-50" : ""
-        }`}
-      >
-        {children}
-      </button>
-      <audio ref={soundRef} src={soundSrc} preload="auto" />
-    </>
+    <button
+      onClick={handleClick}
+      disabled={disabled}
+      className={`px-4 py-2 rounded ${className} ${
+        disabled ? "opacity-50" : ""
+      }`}
+    >
+      {children}
+    </button>
   );
 };
 

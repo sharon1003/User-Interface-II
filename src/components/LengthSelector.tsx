@@ -1,5 +1,6 @@
 // components/LengthSelector.tsx
 import { useTranslation } from "react-i18next";
+import { lengthPrice } from "../constants";
 
 type LengthOption = "short" | "medium" | "long";
 
@@ -9,13 +10,6 @@ interface Props {
 }
 
 const lengthOptions: LengthOption[] = ["short", "medium", "long"];
-
-// Add the price mapping for each length
-const lengthPrice: Record<LengthOption, number> = {
-  short: 0,
-  medium: 2,
-  long: 3,
-};
 
 export const LengthSelector = ({ selected, onSelect }: Props) => {
   const { t } = useTranslation();
