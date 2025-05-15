@@ -1,8 +1,7 @@
 // components/LengthSelector.tsx
 import { useTranslation } from "react-i18next";
 import { lengthPrice } from "../constants";
-
-type LengthOption = "short" | "medium" | "long";
+import { LengthOption } from "../types/NailOptions";
 
 interface Props {
   selected: LengthOption;

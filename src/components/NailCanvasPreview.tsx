@@ -5,10 +5,11 @@ import { useNailCanvas } from "./useNailCanvas";
 import { useSound } from "./useSound";
 import StickerManager from "./StickerManager";
 import type { Sticker } from "../types/Sticker";
+import type { ShapeOption, LengthOption } from "../types/NailOptions";
 
 interface Props {
-  shape: "almond" | "oval" | "squoval" | "coffin";
-  length: "short" | "medium" | "long";
+  shape: ShapeOption;
+  length: LengthOption;
   color: string;
   step: number;
   totalPrice: number;

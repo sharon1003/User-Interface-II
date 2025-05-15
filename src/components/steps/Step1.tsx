@@ -1,9 +1,10 @@
 import { ShapeSelector } from "../ShapeSelector";
 import CustomizeButton from "../CustomizeButton";
+import type { ShapeOption } from "../../types/NailOptions";
 
 interface Step1Props {
-  shape: "almond" | "oval" | "squoval" | "coffin";
-  setShape: (shape: "almond" | "oval" | "squoval" | "coffin") => void;
+  shape: ShapeOption;
+  setShape: (shape: ShapeOption) => void;
   t: (key: string) => string;
   handleNext: () => void;
 }

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-type ShapeOption = "almond" | "oval" | "squoval" | "coffin";
+import type { ShapeOption } from "../types/NailOptions";
 
 interface Props {
   selected: ShapeOption;

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { Sticker } from "../types/Sticker";
+import type { LengthOption, ShapeOption } from "../types/NailOptions";
 
 export function useNailCanvas({
   canvasRef,
@@ -11,8 +12,8 @@ export function useNailCanvas({
   setStickers,
 }: {
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
-  shape: "almond" | "oval" | "squoval" | "coffin";
-  length: "short" | "medium" | "long";
+  shape: ShapeOption;
+  length: LengthOption;
   color: string;
   stickers: Sticker[];
   imageCache: React.RefObject<Map<string, HTMLImageElement>>;
