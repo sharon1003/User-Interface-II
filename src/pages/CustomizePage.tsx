@@ -1,13 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { ShapeSelector } from "../components/ShapeSelector";
-import { LengthSelector } from "../components/LengthSelector";
-import ColorPatternSelector from "../components/ColorPattern";
-import NailCanvasPreview from "../components/NailCanvasPreview";
-import SelectPicture from "../components/SelectPicture";
-import CustomizeButton from "../components/CustomizeButton";
 import { useCart } from "../components/CartContext";
 import { generateId } from "../utils/uuid";
+import NailCanvasPreview from "../components/NailCanvasPreview";
+import Step1 from "../components/steps/Step1";
+import Step2 from "../components/steps/Step2";
+import Step3 from "../components/steps/Step3";
+import Step4 from "../components/steps/Step4";
+import Step5 from "../components/steps/Step5";
 
 const CustomizePage = () => {
   const { t } = useTranslation();
@@ -75,152 +75,47 @@ const CustomizePage = () => {
         </h1>
         <div className="space-y-6">
           {step === 1 && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">
-                {t("customize.step1")}
-              </h2>
-              <ShapeSelector selected={shape} onSelect={setShape} />
-              <div className="mt-6 flex justify-center">
-                <CustomizeButton
-                  onClick={handleNext}
-                  soundSrc="/sounds/next.wav"
-                  className="bg-black text-white"
-                >
-                  {t("customize.next")}
-                </CustomizeButton>
-              </div>
-            </>
+            <Step1
+              shape={shape}
+              setShape={setShape}
+              t={t}
+              handleNext={handleNext}
+            />
           )}
-
           {step === 2 && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">
-                {t("customize.step2")}
-              </h2>
-              <LengthSelector selected={length} onSelect={handleLengthChange} />
-              <div className="mt-6 flex justify-between">
-                <CustomizeButton
-                  onClick={handleBack}
-                  soundSrc="/sounds/back.wav"
-                  className="border"
-                >
-                  {t("customize.back")}
-                </CustomizeButton>
-                <CustomizeButton
-                  onClick={handleNext}
-                  soundSrc="/sounds/next.wav"
-                  className="bg-black text-white"
-                >
-                  {t("customize.next")}
-                </CustomizeButton>
-              </div>
-            </>
+            <Step2
+              length={length}
+              handleLengthChange={handleLengthChange}
+              t={t}
+              handleBack={handleBack}
+              handleNext={handleNext}
+            />
           )}
-
           {step === 3 && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">
-                {t("customize.step3")}
-              </h2>
-              <ColorPatternSelector
-                selectedColor={color}
-                onColorSelect={setColor}
-              />
-              <div className="mt-6 flex justify-between">
-                <CustomizeButton
-                  onClick={handleBack}
-                  soundSrc="/sounds/back.wav"
-                  className="border"
-                >
-                  {t("customize.back")}
-                </CustomizeButton>
-                <CustomizeButton
-                  onClick={handleNext}
-                  soundSrc="/sounds/next.wav"
-                  className="bg-black text-white"
-                >
-                  {t("customize.next")}
-                </CustomizeButton>
-              </div>
-            </>
+            <Step3
+              color={color}
+              setColor={setColor}
+              t={t}
+              handleBack={handleBack}
+              handleNext={handleNext}
+            />
           )}
-
           {step === 4 && (
-              <>
-                  <h2 className="text-xl font-semibold mb-2">
-                      {t("customize.step4")}
-                  </h2>
-                  <p className="text-sm text-gray-500 mb-4 text-center">
-                      {t("customize.stickersHelper.prefix")} <strong>{t("customize.stickersHelper.drag")}</strong> {t("customize.stickersHelper.middle")} <strong>{t("customize.stickersHelper.doubleClick")}</strong> {t("customize.stickersHelper.suffix")}
-                  </p>
-                  <SelectPicture/>
-                  {/* Reset Button */}
-                  {/* <div className="mt-4 text-center">
-                      <button
-                          onClick={() => setStickers([])}
-                          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-                      >
-                          Reset Stickers
-                      </button>
-                  </div> */}
-                  <div className="mt-6 flex justify-between">
-                      <CustomizeButton onClick={handleBack} soundSrc="/sounds/back.wav" className="border">
-                          {t("customize.back")}
-                      </CustomizeButton>
-                      <CustomizeButton onClick={handleNext} soundSrc="/sounds/next.wav"
-                                      className="bg-black text-white">
-                          {t("customize.next")}
-                      </CustomizeButton>
-                  </div>
-              </>
+            <Step4 t={t} handleBack={handleBack} handleNext={handleNext} />
           )}
-
           {step === 5 && (
-            <>
-              <h2 className="text-xl font-semibold mb-2">
-                {t("customize.step5")}
-              </h2>
-              <p>
-                <strong>{t("customize.shape")}:</strong> {shape}
-              </p>
-              <p>
-                <strong>{t("customize.length")}:</strong> {length}
-              </p>
-              <p>
-                <strong>{t("customize.color")}:</strong>{" "}
-                <span style={{ color }}>{color}</span>
-              </p>
-              <p>
-                <strong>{t("customize.price")}:</strong> $
-                {totalPrice.toFixed(2)}
-              </p>
-              <div className="mt-4 text-center">
-                <button
-                  onClick={handleDownload}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  {t("customize.savePreview")}
-                </button>
-              </div>
-              <div className="mt-6 flex justify-between">
-                <CustomizeButton
-                  onClick={handleBack}
-                  soundSrc="/sounds/back.wav"
-                  className="border"
-                >
-                  {t("customize.back")}
-                </CustomizeButton>
-                <button
-                  onClick={handleSubmit}
-                  className="px-4 py-2 bg-green-600 text-white rounded"
-                >
-                  {t("customize.submit")}
-                </button>
-              </div>
-            </>
+            <Step5
+              shape={shape}
+              length={length}
+              color={color}
+              totalPrice={totalPrice}
+              t={t}
+              handleBack={handleBack}
+              handleDownload={handleDownload}
+              handleSubmit={handleSubmit}
+            />
           )}
         </div>
-
         {/* Preview */}
         <div className="mt-10 bg-gray-50 border rounded p-4">
           <h2 className="text-xl font-semibold mb-4">
