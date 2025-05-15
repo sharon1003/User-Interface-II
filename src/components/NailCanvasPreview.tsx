@@ -13,6 +13,8 @@ interface Props {
   step: number;
   totalPrice: number;
   setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+  stickers: Sticker[];
+  onStickersChange: (stickers: Sticker[]) => void;
 }
 
 const NailCanvasPreview = ({
@@ -22,12 +24,13 @@ const NailCanvasPreview = ({
   step,
   totalPrice,
   setTotalPrice,
+  stickers,
+  onStickersChange,
 }: Props) => {
   const { t } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [stickers, setStickers] = useState<Sticker[]>([]);
   const [undoStack, setUndoStack] = useState<Sticker[][]>([]);
   const [redoStack, setRedoStack] = useState<Sticker[][]>([]);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
@@ -46,7 +49,13 @@ const NailCanvasPreview = ({
     color,
     stickers,
     imageCache,
-    setStickers,
+    setStickers: (value) => {
+      if (typeof value === "function") {
+        onStickersChange(value(stickers));
+      } else {
+        onStickersChange(value);
+      }
+    },
   });
   const { playSound } = useSound();
 
@@ -64,7 +73,7 @@ const NailCanvasPreview = ({
   const updateStickers = (newStickers: Sticker[]) => {
     setUndoStack((prev) => [...prev, stickers]);
     setRedoStack([]);
-    setStickers(newStickers);
+    onStickersChange(newStickers);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -109,11 +118,11 @@ const NailCanvasPreview = ({
   const handleMouseMove = (e: React.MouseEvent) => {
     if (draggingIndex === null) return;
     const { x, y } = getMousePos(e);
-    setStickers((prev) => {
-      const updated = [...prev];
-      updated[draggingIndex] = { ...updated[draggingIndex], x, y };
-      return updated;
-    });
+    onStickersChange(
+      stickers.map((sticker, idx) =>
+        idx === draggingIndex ? { ...sticker, x, y } : sticker
+      )
+    );
   };
 
   const handleMouseUp = () => {
@@ -135,7 +144,7 @@ const NailCanvasPreview = ({
         const stickerPrice = stickerPrices[sticker.emoji] || 0;
         setTotalPrice((prev) => prev - stickerPrice);
 
-        updateStickers(stickers.filter((_, index) => index !== i));
+        onStickersChange(stickers.filter((_, index) => index !== i));
         return;
       }
     }
@@ -159,7 +168,7 @@ const NailCanvasPreview = ({
 
     setUndoStack((prev) => prev.slice(0, -1));
     setRedoStack((prev) => [...prev, stickers]);
-    setStickers(last);
+    onStickersChange(last);
     playSound("undo", "/sounds/undo.wav");
   };
 
@@ -181,7 +190,7 @@ const NailCanvasPreview = ({
 
     setRedoStack((prev) => prev.slice(0, -1));
     setUndoStack((prev) => [...prev, stickers]);
-    setStickers(next);
+    onStickersChange(next);
     playSound("redo", "/sounds/redo.wav");
   };
 

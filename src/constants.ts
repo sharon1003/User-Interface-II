@@ -12,4 +12,5 @@ export const stickerPrices: Record<string, number> = {
   "💫": 2.5,
   "🖤": 1.0,
   "🍓": 1.8,
+  "📸": 2.0, // Custom sticker (image upload)
 };
