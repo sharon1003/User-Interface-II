@@ -8,6 +8,7 @@ import Step2 from "../components/steps/Step2";
 import Step3 from "../components/steps/Step3";
 import Step4 from "../components/steps/Step4";
 import Step5 from "../components/steps/Step5";
+import { lengthPrice } from "../constants";
 
 const CustomizePage = () => {
   const { t } = useTranslation();
@@ -20,12 +21,6 @@ const CustomizePage = () => {
 
   const basePrice = 24.99;
   const [totalPrice, setTotalPrice] = useState<number>(basePrice);
-
-  const lengthPrice: Record<"short" | "medium" | "long", number> = {
-    short: 0,
-    medium: 2,
-    long: 3,
-  };
 
   const handleLengthChange = (newLength: "short" | "medium" | "long") => {
     setLength(newLength);

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { stickerPrices } from "../constants";
 
 interface Props {
   shape: "almond" | "oval" | "squoval" | "coffin";
@@ -46,15 +47,6 @@ const NailCanvasPreview = ({
 
   // Image cache to prevent reloading
   const imageCache = useRef<Map<string, HTMLImageElement>>(new Map());
-
-  // Sticker price mapping
-  const stickerPrices: Record<string, number> = {
-    "🌸": 1.5,
-    "✨": 2.0,
-    "💫": 2.5,
-    "🖤": 1.0,
-    "🍓": 1.8,
-  };
 
   const playSound = (ref: React.RefObject<HTMLAudioElement | null>) => {
     if (ref.current) {
