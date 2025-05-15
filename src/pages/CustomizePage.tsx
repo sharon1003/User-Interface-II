@@ -8,7 +8,8 @@ import Step2 from "../components/steps/Step2";
 import Step3 from "../components/steps/Step3";
 import Step4 from "../components/steps/Step4";
 import Step5 from "../components/steps/Step5";
-import { lengthPrice } from "../constants";
+import { lengthPrice, stickerPrices } from "../constants";
+import type { Sticker } from "../types/Sticker";
 
 const CustomizePage = () => {
   const { t } = useTranslation();
@@ -18,14 +19,32 @@ const CustomizePage = () => {
   );
   const [length, setLength] = useState<"short" | "medium" | "long">("short");
   const [color, setColor] = useState<string>("#F87171");
+  const [selectedStickers, setSelectedStickers] = useState<Sticker[]>([]);
 
   const basePrice = 24.99;
   const [totalPrice, setTotalPrice] = useState<number>(basePrice);
 
+  // Helper to recalculate total price
+  const recalculateTotalPrice = (
+    len: "short" | "medium" | "long",
+    stickers: Sticker[]
+  ) => {
+    const stickersTotal = stickers.reduce(
+      (sum, s) => sum + (stickerPrices[s.emoji] || 0),
+      0
+    );
+    setTotalPrice(basePrice + lengthPrice[len] + stickersTotal);
+  };
+
   const handleLengthChange = (newLength: "short" | "medium" | "long") => {
     setLength(newLength);
-    const newPrice = basePrice + lengthPrice[newLength];
-    setTotalPrice(newPrice);
+    recalculateTotalPrice(newLength, selectedStickers);
+  };
+
+  // Call this when stickers are added/removed
+  const handleStickersChange = (newStickers: Sticker[]) => {
+    setSelectedStickers(newStickers);
+    recalculateTotalPrice(length, newStickers);
   };
 
   const handleNext = () => setStep((prev) => prev + 1);
@@ -123,6 +142,8 @@ const CustomizePage = () => {
             step={step}
             totalPrice={totalPrice}
             setTotalPrice={setTotalPrice}
+            stickers={selectedStickers}
+            onStickersChange={handleStickersChange}
           />
           <p className="text-sm text-gray-500 mt-2 text-center">
             {t("customize.previewDescription")}
