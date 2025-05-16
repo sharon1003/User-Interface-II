@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCart } from "../components/CartContext";
 import { generateId } from "../utils/uuid";
 import NailCanvasPreview from "../components/NailCanvasPreview";
+import AnimatedBackground from "../components/AnimatedBackground";
 import Step1 from "../components/steps/Step1";
 import Step2 from "../components/steps/Step2";
 import Step3 from "../components/steps/Step3";
@@ -82,8 +83,10 @@ const CustomizePage = () => {
   };
 
   return (
-    <div className="bg-[#f5f3ea] min-h-screen">
-      <div className="max-w-3xl mx-auto p-6">
+    <div className="relative bg-[#f5f3ea] min-h-screen overflow-hidden">
+      <AnimatedBackground />
+
+      <div className="relative max-w-3xl mx-auto p-6">
         <h1 className="text-3xl font-bold text-center mb-6">
           {t("customize.title")}
         </h1>
