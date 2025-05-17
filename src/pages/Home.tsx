@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import Joyride, { STATUS, Step } from "react-joyride";
 import "./Home.css";
 import Footer from "../components/Footer";
 import ServiceCard from "../components/ServiceCard";
@@ -8,9 +10,63 @@ const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const [runTour, setRunTour] = useState(false);
+  const [stepIndex, setStepIndex] = useState(0);
+
+  const steps: Step[] = [
+    {
+      target: ".step-shop",
+      content: "Explore our most popular nail services!",
+    },
+    {
+      target: ".step-customize",
+      content: "Customize your own nail design in a few fun steps.",
+    },
+    {
+      target: ".step-cart",
+      content: "Review your custom picks before you check out.",
+    },
+    {
+      target: ".step-start",
+      content: "Start your beautiful journey with Nail Shop",
+    },
+  ];
+
+  const handleJoyrideCallback = (data: any) => {
+    const { status, index, type, action } = data;
+  
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setRunTour(false);
+    } else if (type === "step:after") {
+      if (action === "next") {
+        setStepIndex(index + 1);
+      } else if (action === "prev") {
+        setStepIndex(index - 1);
+      }
+    }
+  };
+
   return (
     <div className="home-container">
-      <section className="hero">
+      <Joyride
+        steps={steps}
+        run={runTour}
+        stepIndex={stepIndex}
+        callback={handleJoyrideCallback}
+        continuous
+        showSkipButton
+        spotlightClicks
+        locale={{
+          back: "Back",
+          close: "Close",
+          last: "Done", 
+          next: "Next",
+          skip: "Skip",
+        }}
+        styles={{ options: { zIndex: 9999 } }}
+      />
+
+      <section className="hero step-start">
         <h1>{t("home.welcome")}</h1>
       </section>
 
@@ -23,7 +79,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="services grid md:grid-cols-3 gap-6 p-6">
+      <section className="services grid md:grid-cols-3 gap-6 p-6 step-shop">
         <ServiceCard
           icon="💅"
           title={t("home.gel.title")}
@@ -46,6 +102,18 @@ const Home = () => {
           onReadMore={() => navigate("/shop?category=nailart")}
         />
       </section>
+
+      <div className="text-center mt-8">
+        <button
+          onClick={() => {
+            setStepIndex(0);
+            setRunTour(true);
+          }}
+          className="fixed bottom-6 right-6 bg-pink-500 text-white px-4 py-2 rounded-full shadow-lg z-50"
+        >
+          Help Me Tour!
+        </button>
+      </div>
 
       {/* <section className="about">
         <h2>Our Philosophy</h2>

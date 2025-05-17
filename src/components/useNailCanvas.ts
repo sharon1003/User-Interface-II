@@ -36,12 +36,19 @@ export function useNailCanvas({
     }[length];
 
     const nailHeight = height * 0.1 * lengthRatio;
+    const nailWidth = 20; // ⬅️ Increased width for broader nails
+
+    ctx.save();
+    ctx.translate(-40, -60);
+    ctx.scale(1.25, 1.25); // ⬅️ Scale up whole hand & nails for bigger proportion
 
     // Draw hand shape
     ctx.fillStyle = "#FAD8C9";
     ctx.beginPath();
+
     ctx.moveTo(140, 460);
     ctx.quadraticCurveTo(90, 400, 90, 300);
+
     ctx.lineTo(90, 260);
     ctx.quadraticCurveTo(100, 240, 110, 260);
     ctx.lineTo(135, 320);
@@ -66,23 +73,23 @@ export function useNailCanvas({
     const drawNail = (x: number, y: number) => {
       ctx.beginPath();
       if (shape === "almond") {
-        ctx.moveTo(x - 10, y);
-        ctx.quadraticCurveTo(x, y - nailHeight - 30, x + 8, y);
+        ctx.moveTo(x - nailWidth / 2, y);
+        ctx.quadraticCurveTo(x, y - nailHeight - 30, x + nailWidth / 2, y);
       } else if (shape === "oval") {
-        ctx.moveTo(x - 10, y);
+        ctx.moveTo(x - nailWidth / 2, y);
         ctx.bezierCurveTo(
-          x - 10,
+          x - nailWidth / 2,
           y - nailHeight,
-          x + 10,
+          x + nailWidth / 2,
           y - nailHeight,
-          x + 10,
+          x + nailWidth / 2,
           y
         );
       } else if (shape === "squoval") {
-        ctx.moveTo(x - 10, y);
-        ctx.lineTo(x - 10, y - nailHeight);
-        ctx.quadraticCurveTo(x, y - nailHeight - 5, x + 10, y - nailHeight);
-        ctx.lineTo(x + 10, y);
+        ctx.moveTo(x - nailWidth / 2, y);
+        ctx.lineTo(x - nailWidth / 2, y - nailHeight);
+        ctx.quadraticCurveTo(x, y - nailHeight - 5, x + nailWidth / 2, y - nailHeight);
+        ctx.lineTo(x + nailWidth / 2, y);
       } else if (shape === "coffin") {
         ctx.moveTo(x - 9, y);
         ctx.lineTo(x - 11, y - nailHeight);
@@ -98,6 +105,8 @@ export function useNailCanvas({
     drawNail(210, 140);
     drawNail(250, 160);
     drawNail(290, 180);
+
+    ctx.restore();
 
     // Draw stickers
     for (const { emoji, x, y, scale, rotation, imageUrl } of stickers) {

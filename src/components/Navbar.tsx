@@ -30,7 +30,7 @@ const Navbar = () => {
           <button aria-label="User" className="navbar-button">
             <FaUser />
           </button>
-          <NavLink to="/cart" className="navbar-button relative">
+          <NavLink to="/cart" className="navbar-button relative step-cart">
             <FaShoppingBag />
             {cartItems.length > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
@@ -78,9 +78,9 @@ const Navbar = () => {
         <NavLink
           to="/custom-your-nail"
           className={({ isActive }) =>
-            `navbar-link ${
+            `navbar-link step-customize ${
               isActive ? "underline underline-offset-4 text-green-700" : ""
-            }`
+            }` 
           }
         >
           {t("navbar.customize")}
