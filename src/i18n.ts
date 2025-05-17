@@ -23,6 +23,7 @@ i18n
                         welcome: "Welcome to Nail Shop",
                         ourProduct: "Our Product",
                         description: "Discover your favorite styles with our most popular nail services.",
+                        helpMeTour: "Help Me Tour!",
                         gel: {
                             title: "Gel Manicure",
                             description: "Long-lasting, glossy finish with a range of seasonal and classic colors."
@@ -113,6 +114,17 @@ i18n
                         total: "Total",
                         payNow: "Pay Now",
                         swishPhone: "Swish Phone Number",
+                    },
+                    tour: {
+                        start: "Start your beautiful journey with Nail Shop",
+                        shop: "Explore our services and choose what fits you",
+                        customize: "Personalize your press-on nails here",
+                        cart: "Check out the items you've added to your cart",
+                        back: "Back",
+                        next: "Next",
+                        last: "Finish",
+                        close: "Close",
+                        skip: "Skip Tour"
                     }
                 },
             },
@@ -127,6 +139,7 @@ i18n
                         welcome: "Chào mừng đến với Nail Shop",
                         ourProduct: "Sản phẩm của chúng tôi",
                         description: "Khám phá phong cách yêu thích của bạn với các dịch vụ làm móng phổ biến nhất của chúng tôi.",
+                        helpMeTour: "Hướng dẫn cho tôi!",
                         gel: {
                             title: "Sơn Gel",
                             description: "Bóng đẹp và bền lâu với nhiều màu sắc theo mùa và cổ điển."
@@ -217,6 +230,17 @@ i18n
                         total: "Tổng cộng",
                         payNow: "Thanh toán",
                         swishPhone: "Số điện thoại Swish",
+                    },
+                    tour: {
+                        start: "Bắt đầu hành trình làm đẹp cùng Nail Shop",
+                        shop: "Khám phá các dịch vụ và chọn điều phù hợp với bạn",
+                        customize: "Cá nhân hóa bộ móng theo ý thích của bạn tại đây",
+                        cart: "Kiểm tra các sản phẩm bạn đã thêm vào giỏ hàng",
+                        back: "Quay lại",
+                        next: "Tiếp theo",
+                        last: "Hoàn tất",
+                        close: "Đóng",
+                        skip: "Bỏ qua hướng dẫn"
                     }
                 },
             },
@@ -231,6 +255,7 @@ i18n
                         welcome: "Välkommen till Nail Shop",
                         ourProduct: "Våra produkter",
                         description: "Upptäck dina favoritstilar med våra mest populära nagelbehandlingar.",
+                        helpMeTour: "Visa mig runt!",
                         gel: {
                             title: "Gellack",
                             description: "Hållbar, glansig finish med ett utbud av säsongsbetonade och klassiska färger."
@@ -321,6 +346,17 @@ i18n
                         total: "Totalt",
                         payNow: "Betala nu",
                         swishPhone: "Swish-telefonnummer",
+                    },
+                    tour: {
+                        start: "Börja din vackra resa med Nail Shop",
+                        shop: "Utforska våra tjänster och hitta vad som passar dig",
+                        customize: "Anpassa dina press-on naglar här",
+                        cart: "Granska produkterna du har lagt i varukorgen",
+                        back: "Tillbaka",
+                        next: "Nästa",
+                        last: "Avsluta",
+                        close: "Stäng",
+                        skip: "Hoppa över turen"
                     }
                 },
             },
@@ -335,6 +371,7 @@ i18n
                         welcome: "歡迎來到 Nail Shop",
                         ourProduct: "我們的產品",
                         description: "透過我們最受歡迎的美甲服務，發現你最喜歡的風格。",
+                        helpMeTour: "開始導覽！",
                         gel: {
                             title: "光療美甲",
                             description: "持久亮麗，提供多種季節性和經典顏色選擇。"
@@ -425,6 +462,17 @@ i18n
                         total: "總計",
                         payNow: "立即支付",
                         swishPhone: "Swish 手機號碼",
+                    },
+                    tour: {
+                        start: "開始你的美甲之旅吧！",
+                        shop: "瀏覽我們提供的服務，挑選適合你的方案",
+                        customize: "在這裡客製化你的專屬美甲款式",
+                        cart: "查看你加入購物車的商品",
+                        back: "返回",
+                        next: "下一步",
+                        last: "完成",
+                        close: "關閉",
+                        skip: "跳過導覽"
                     }
                 },
             },

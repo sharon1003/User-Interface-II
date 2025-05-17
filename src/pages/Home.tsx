@@ -16,19 +16,19 @@ const Home = () => {
   const steps: Step[] = [
     {
       target: ".step-shop",
-      content: "Explore our most popular nail services!",
+      content: t("tour.shop"),
     },
     {
       target: ".step-customize",
-      content: "Customize your own nail design in a few fun steps.",
+      content: t("tour.customize"),
     },
     {
       target: ".step-cart",
-      content: "Review your custom picks before you check out.",
+      content: t("tour.cart"),
     },
     {
       target: ".step-start",
-      content: "Start your beautiful journey with Nail Shop",
+      content: t("tour.start"),
     },
   ];
 
@@ -57,11 +57,11 @@ const Home = () => {
         showSkipButton
         spotlightClicks
         locale={{
-          back: "Back",
-          close: "Close",
-          last: "Done", 
-          next: "Next",
-          skip: "Skip",
+          back: t("tour.back"),
+          close: t("tour.close"),
+          last: t("tour.last"),
+          next: t("tour.next"),
+          skip: t("tour.skip"),
         }}
         styles={{ options: { zIndex: 9999 } }}
       />
@@ -111,7 +111,7 @@ const Home = () => {
           }}
           className="fixed bottom-6 right-6 bg-pink-500 text-white px-4 py-2 rounded-full shadow-lg z-50"
         >
-          Help Me Tour!
+          {t("home.helpMeTour")}
         </button>
       </div>
 
