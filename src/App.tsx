@@ -7,6 +7,7 @@ import ShopPage from "./pages/Shop";
 import PaymentPage from "./pages/PaymentPage";
 import { CartProvider } from "./components/CartContext";
 import CustomizePage from "./pages/CustomizePage";
+import ConfirmationPage from "./components/ConfirmationPage.tsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
           <Route path="/custom-your-nail" element={<CustomizePage />}></Route>
         </Routes>
       </Router>

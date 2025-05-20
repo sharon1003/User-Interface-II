@@ -2,12 +2,15 @@
 import { useCart } from "../components/CartContext";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { generateOrderNumber } from "../utils/orderNumber";
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
   const { cartItems, clearCart } = useCart();
   const { t } = useTranslation();
   const [paymentMethod, setPaymentMethod] = useState("credit");
   const [swishNumber, setSwishNumber] = useState("");
+  const navigate = useNavigate();
 
   const total = cartItems.reduce((sum, item) => {
     const price = parseFloat(item.price.replace("$", ""));
@@ -15,7 +18,16 @@ const PaymentPage = () => {
   }, 0);
 
   const handlePayment = () => {
-    alert(t("payment.success")); // Replace with real integration
+    const orderNo = generateOrderNumber();
+    navigate("/confirmation", {
+      state: {
+        orderNo,
+        cartItems,
+        total,
+        method: paymentMethod,
+      },
+      replace: true,
+    });
     clearCart();
   };
 

@@ -7,8 +7,7 @@ import {
 } from "react";
 import { ProductProps } from "./Product.tsx"; // adjust path if needed
 
-// Define the structure of your cart context
-type CartItem = ProductProps & { quantity: number };
+export type CartItem = ProductProps & { quantity: number };
 
 interface CartContextType {
   cartItems: CartItem[];

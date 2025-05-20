@@ -125,6 +125,13 @@ i18n
                         last: "Finish",
                         close: "Close",
                         skip: "Skip Tour"
+                    },
+                    confirmation: {
+                        success: "Payment successful",
+                        order: "Order #",
+                        method: "Payment Method:",
+                        total: "Total:",
+                        backHome: "Back to Home"
                     }
                 },
             },
@@ -241,6 +248,13 @@ i18n
                         last: "Hoàn tất",
                         close: "Đóng",
                         skip: "Bỏ qua hướng dẫn"
+                    },
+                    confirmation: {
+                        success: "Thanh toán thành công",
+                        order: "Mã đơn",
+                        method: "Phương thức thanh toán:",
+                        total: "Tổng:",
+                        backHome: "Về trang chủ"
                     }
                 },
             },
@@ -357,6 +371,13 @@ i18n
                         last: "Avsluta",
                         close: "Stäng",
                         skip: "Hoppa över turen"
+                    },
+                    confirmation: {
+                        success: "Betalningen genomförd",
+                        order: "Order nr",
+                        method: "Betalningssätt:",
+                        total: "Summa:",
+                        backHome: "Till startsidan"
                     }
                 },
             },
@@ -473,6 +494,13 @@ i18n
                         last: "完成",
                         close: "關閉",
                         skip: "跳過導覽"
+                    },
+                    confirmation: {
+                        success: "付款成功",
+                        order: "订单号",
+                        method: "付款方式：",
+                        total: "总计：",
+                        backHome: "返回首页"
                     }
                 },
             },
