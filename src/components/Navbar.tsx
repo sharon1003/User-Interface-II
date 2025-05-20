@@ -18,18 +18,23 @@ const Navbar = () => {
         </div> */}
 
         {/* Center Logo */}
-        <NavLink
-          to="/"
-          className="text-2xl font-bold flex items-center space-x-2 navbar-logo"
-        >
-          <span className="font-[Pacifico] text-black">Nail Shop</span>
+        {/* Center Logo */}
+        <NavLink to="/" className="flex items-center space-x-2">
+          <span
+            className="
+            font-[Lobster]            /* keep the script */
+            font-normal               /* forces regular weight */
+            text-[clamp(1.75rem,4vw+0.5rem,3rem)]  /* fluid size */
+            tracking-tight
+            relative -top-[2px]
+            "
+          >
+          Nail Shop
+          </span>
         </NavLink>
 
         {/* Right Icons */}
         <div className="flex items-center space-x-4 text-gray-700 text-lg">
-          <button aria-label="User" className="navbar-button">
-            <FaUser />
-          </button>
           <NavLink to="/cart" className="navbar-button relative step-cart">
             <FaShoppingBag />
             {cartItems.length > 0 && (
