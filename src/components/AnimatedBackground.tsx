@@ -11,7 +11,7 @@ const AnimatedBackground = () => {
             className="sakura"
             style={{
               left: `${Math.random() * 100}%`,
-              animationDuration: `${20 + Math.random() * 10}s`,
+              animationDuration: `${10 + Math.random() * 10}s`,
               animationDelay: `${Math.random()}s`,
             }}
           />
