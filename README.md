@@ -1,4 +1,4 @@
-# The Flying Dutchman - by Roaring Waves (HTML)
+# Nail Salon
 
 Group Members:
 Chih-Yen Lu, Kenneth Kuan Phing Ong, Ngan Ha Pham, Wen-Hsuan Peng 
