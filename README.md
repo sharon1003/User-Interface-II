@@ -1,4 +1,19 @@
-# React + TypeScript + Vite
+# The Flying Dutchman - by Roaring Waves (HTML)
+
+Group Members:
+Chih-Yen Lu, Kenneth Kuan Phing Ong, Ngan Ha Pham, Wen-Hsuan Peng 
+
+## Description:
+We are building a web application for custom nail design. It allows customers to personalize their own nail sets by choosing styles, colors, patterns, and decorations. 
+
+## Why React + TypeScript + Vite
+- `React` helps us structure the app using reusable components like shape selectors, Product description and preview panels.
+- We’re using `TypeScript` instead of plain React with JavaScript because it helps us catch bugs early and write more maintainable code.
+- `Vite` helps us develop React apps faster by providing fast startup and instant reloads, making it ideal for small to medium-sized projects.
+
+
+
+## React + TypeScript + Vite
 
 Documentation: https://docs.google.com/document/d/1-VjTBhpau3MdoxlTprDzaQxEjBLGBtSE9d5knW4P2dA/edit?tab=t.0
 
